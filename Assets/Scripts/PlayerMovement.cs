@@ -4,12 +4,21 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("General Settings")]
+    public float playerHeight;
     public CharacterController controller;
     public Transform cam;
+    public LayerMask groundMask;
+
+    [Header("Keybinds")]
+    public KeyCode sprintKey = KeyCode.LeftShift;
 
     [Header("Base Movement Settings")]
-    public float speed = 6f;
+    private float speed = 6f;
+    public float walkSpeed = 6f;
+    public float sprintSpeed = 8f;
     float turnSmoothTime = 0.05f;
+    public float wallRunSpeed;
 
     [Header("Jump & Fall Settings")]
     public float gravity = -9.18f;
@@ -17,45 +26,88 @@ public class PlayerMovement : MonoBehaviour
     public float jumpHeight = 3f;
     public float jumpHoldForce = 1.5f;
     public float jumpHoldTime = 0.25f;
-    public Transform groundCheck;
-    public LayerMask groundMask;
     public float groundDistance = 0.1f;
     public float jumpBufferTime = 0.2f;
     public float coyoteTime = 0.1f;
 
-    [Header("Ledge Hang Settings")]
+    /*[Header("Ledge Hang Settings")]
     public float downRayLength = 1.5f;
     public float fwdRayLength = .7f;
     public float forwardOffset = -.1f;
-    public float upOffset= -1f;
+    public float upOffset = -1f;*/
 
 
     private Vector3 dir;
-    private Vector3 velocity;
+    public Vector3 velocity;
     private float turnSmoothVelocity;
     private float maxJumpBufferTime = 0f;
     private float jumpWindow;
     private float jumpTime;
-    private bool isJumping;
+    private bool pressingJumpButton;
     private bool midJump;
     private bool fallingFromJump;
     private bool isGrounded;
     private bool jumpBuffer = false;
-    bool hanging;
-    bool useGravity = true;
-    bool canMove = true;
+
+    public bool useGravity = true;
+    public bool canMove = true;
+
+    public MovementState state;
+
+    public enum MovementState
+    {
+        walking,
+        sprinting,
+        wallrunning,
+        hanging,
+        air
+    }
+
+    //bool hanging;
+    public bool wallrunning;
 
     void Update()
     {
         Fall();
         Move();
         Jump();
-        LedgeGrab();
+        //LedgeGrab();
+        StateHandler();
+    }
+
+
+    void StateHandler()
+    {
+        if (wallrunning)
+        {
+            state = MovementState.wallrunning;
+            speed = wallRunSpeed;
+        }
+
+        else if(Input.GetKey(sprintKey) && isGrounded)
+        {
+            state = MovementState.sprinting;
+            speed = sprintSpeed;
+        } 
+        else if (isGrounded)
+        {
+            state = MovementState.walking;
+            speed = walkSpeed;
+        }
+        else /*if (hanging)
+        {
+            state = MovementState.hanging;
+        }
+        else*/
+        {
+            state = MovementState.air;
+        }
     }
 
     void Fall()
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + groundDistance, groundMask);
         if (isGrounded)
         {
             jumpWindow = Time.time + coyoteTime;
@@ -66,6 +118,9 @@ public class PlayerMovement : MonoBehaviour
             {
                 velocity.y = -2f;
             }
+
+            velocity.x = 0; 
+            velocity.z = 0;
         }
 
         if (useGravity) { velocity.y += gravity * Time.deltaTime; }
@@ -88,6 +143,7 @@ public class PlayerMovement : MonoBehaviour
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
                 Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+               
                 controller.Move(moveDir.normalized * speed * Time.deltaTime);
             }
         }
@@ -98,24 +154,24 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump"))
         {
-            if (hanging)
+            /* if (hanging)
             {
                 useGravity = true;
                 hanging = false; 
 
-                isJumping = true;
+                pressingJumpButton = true;
                 midJump = true;
                 jumpTime = jumpHoldTime;
                 velocity.y = Mathf.Sqrt(jumpHoldForce * -2f * gravity);
 
                 StartCoroutine(EnableCanMove(.25f));
 
-            } else
+            } else */
             {
 
-                if (Time.time <= jumpWindow && !isJumping)
+                if (Time.time <= jumpWindow && !pressingJumpButton)
                 {
-                    isJumping = true;
+                    pressingJumpButton = true;
                     midJump = true;
                     jumpTime = jumpHoldTime;
                     velocity.y = Mathf.Sqrt(jumpHoldForce * -2f * gravity);
@@ -131,7 +187,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (jumpBuffer && isGrounded && Time.time <= maxJumpBufferTime)
         {
-            isJumping = true;
+            pressingJumpButton = true;
             midJump = true;
             jumpTime = jumpHoldTime;
             velocity.y = Mathf.Sqrt(jumpHoldForce * -2f * gravity);
@@ -142,7 +198,7 @@ public class PlayerMovement : MonoBehaviour
             jumpBuffer = false;
         }
 
-        if (Input.GetButton("Jump") && isJumping)
+        if (Input.GetButton("Jump") && pressingJumpButton)
         {
             if (jumpTime > 0)
             {
@@ -151,15 +207,15 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                isJumping = false;
+                pressingJumpButton = false;
             }
         }
 
-        if (isJumping) { midJump = true; }
+        if (pressingJumpButton) { midJump = true; }
 
         if (Input.GetButtonUp("Jump"))
         {
-            isJumping = false;
+            pressingJumpButton = false;
         }
 
         if (midJump && velocity.y < 0)
@@ -179,7 +235,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         canMove = true;
     }
-    void LedgeGrab()
+    /*void LedgeGrab()
     {
         if(velocity.y < 0 && !hanging)
         {
@@ -213,5 +269,5 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
-    }
+    }*/
 }
