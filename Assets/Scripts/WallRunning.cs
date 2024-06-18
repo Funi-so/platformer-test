@@ -29,6 +29,7 @@ public class WallRunning : MonoBehaviour
     [Header("References")]
     public Transform orientation;
     private PlayerMovement pm;
+    private PlayerStats stats;
     private CharacterController cc;
 
     [Header("Exiting")]
@@ -40,12 +41,16 @@ public class WallRunning : MonoBehaviour
     {
         pm = GetComponent<PlayerMovement>();
         cc = GetComponent<CharacterController>();
+        stats = GetComponent<PlayerStats>();
     }
 
     void Update()
     {
-        CheckforWall();
-        StateMachine();
+        if (stats.hasWallRun)
+        {
+            CheckforWall();
+            StateMachine();
+        }
     }
 
     void FixedUpdate()
