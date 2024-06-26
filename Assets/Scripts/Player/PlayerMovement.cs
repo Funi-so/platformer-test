@@ -30,11 +30,11 @@ public class PlayerMovement : MonoBehaviour
     public float jumpBufferTime = 0.2f;
     public float coyoteTime = 0.1f;
 
-    /*[Header("Ledge Hang Settings")]
+    [Header("Ledge Hang Settings")]
     public float downRayLength = 1.5f;
     public float fwdRayLength = .7f;
     public float forwardOffset = -.1f;
-    public float upOffset = -1f;*/
+    public float upOffset = -1f;
 
 
     private Vector3 dir;
@@ -63,16 +63,19 @@ public class PlayerMovement : MonoBehaviour
         air
     }
 
-    //bool hanging;
+    public bool hanging;
     public bool wallrunning;
 
     void Update()
     {
-        Fall();
-        Move();
-        Jump();
-        //LedgeGrab();
-        StateHandler();
+        if (!DialogController.controller.isTalking)
+        {
+            StateHandler();
+            Fall();
+            Move();
+            Jump();
+            LedgeGrab();
+        }
     }
 
 
@@ -94,11 +97,11 @@ public class PlayerMovement : MonoBehaviour
             state = MovementState.walking;
             speed = walkSpeed;
         }
-        else /*if (hanging)
+        else if (hanging)
         {
             state = MovementState.hanging;
         }
-        else*/
+        else
         {
             state = MovementState.air;
         }
@@ -154,7 +157,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump"))
         {
-            /* if (hanging)
+             if (hanging)
             {
                 useGravity = true;
                 hanging = false; 
@@ -166,7 +169,7 @@ public class PlayerMovement : MonoBehaviour
 
                 StartCoroutine(EnableCanMove(.25f));
 
-            } else */
+            } else 
             {
 
                 if (Time.time <= jumpWindow && !pressingJumpButton)
@@ -235,7 +238,8 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         canMove = true;
     }
-    /*void LedgeGrab()
+    
+    void LedgeGrab()
     {
         if(velocity.y < 0 && !hanging)
         {
@@ -269,5 +273,5 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
-    }*/
+    }
 }

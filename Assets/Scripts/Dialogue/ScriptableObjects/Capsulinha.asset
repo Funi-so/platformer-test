@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2d54d74cb1c6694d94f90a7ab3526a2, type: 3}
+  m_Name: Capsulinha
+  m_EditorClassIdentifier: 
+  myName: Capsulinha
+  dialog:
+  - speaker: 0
+    message: "Ol\xE1 meu amigo! Que coincid\xEAncia te encontrar aqui nessa porta
+      suspeitamente grande."
+    answers: []
+  - speaker: 0
+    message: 'Eu acabei de sair desse lugar, mas acabei deixando minha espada cair
+      em algum lugar. '
+    answers: []
+  - speaker: 1
+    message: "Voc\xEA pode encontrar e trazer ela para mim?"
+    answers:
+    - "Pega voc\xEA mesmo"
+    - Pode deixar
+  - speaker: 0
+    message: "Poxa, eu machuquei meus joelhos... T\xE1 t\xE3o ruim que parece at\xE9
+      que n\xE3o tenho nenhum..."
+    answers: []
+  - speaker: 0
+    message: Maravilha! Muito obrigado.
+    answers: []
+  - speaker: 0
+    message: "Voc\xEA pode olhar seu invent\xE1rio com [ESC], correr com [SHIFT],
+      e pular e agarrar quinas chegando perto delas."
+    answers: []
+  - speaker: 0
+    message: "Conto com voc\xEA!"
+    answers: []

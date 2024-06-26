@@ -29,7 +29,7 @@ public class UIInventory : MonoBehaviour
 
     private void RefreshInventoryItems()
     {
-        foreach(Transform child in itemSlotContainer)
+        foreach (Transform child in itemSlotContainer)
         {
             if (child == itemSlotTemplate) continue;
             Destroy(child.gameObject);
@@ -44,7 +44,7 @@ public class UIInventory : MonoBehaviour
                 itemSlotRectTransform.gameObject.SetActive(true);
                 itemSlotRectTransform.anchoredPosition = new Vector2(x * itemSlotCellSize, y * itemSlotCellSize);
                 Image image = itemSlotRectTransform.Find("ItemSlotImage").GetComponent<Image>();
-            image.sprite = item.GetSprite();
+                image.sprite = item.GetSprite();
                 x++;
                 if (x > 4)
                 {

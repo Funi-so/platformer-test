@@ -3,7 +3,11 @@ guid: 0275a02331b71af42bd66f69a5634317
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - pfItemWorld: {instanceID: 0}
+  - swordSprite: {instanceID: 0}
+  - keySprite: {instanceID: 0}
+  - coinSprite: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

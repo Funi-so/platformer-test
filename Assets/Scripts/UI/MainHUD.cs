@@ -16,18 +16,28 @@ public class MainHUD : MonoBehaviour
     {
         if (Input.GetKeyDown(menuKey))
         {
-            if (!mainEnabled) 
+            if (!DialogController.controller.isTalking)
             {
-                mainEnabled = true;
-                pauseMenu.SetActive(true);
-                Time.timeScale = 0f;
-            }
-            else
-            {
-                mainEnabled = false;
-                pauseMenu.SetActive(false);
-                Time.timeScale = 1f;
-            }
+                if (!mainEnabled) 
+                {
+                    mainEnabled = true;
+                    pauseMenu.SetActive(true);
+                    Cursor.visible = true;
+                    Cursor.lockState = CursorLockMode.None;
+                    Time.timeScale = 0f;
+                }
+                else
+                {
+                    mainEnabled = false;
+                    pauseMenu.SetActive(false);
+                    Time.timeScale = 1f;
+                }
+            } else { DialogController.controller.FinishDialog(); }
         }
+    }
+    public void AddIndexCount(int value)
+    {
+        DialogController.controller.dialogIndex += value;
+        DialogController.controller.Dialog();
     }
 }

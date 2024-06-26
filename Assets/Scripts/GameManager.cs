@@ -26,17 +26,13 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         Time.timeScale = 1f;
-        inventory = new Inventory();
-        uiInventory.SetInventory(inventory);
     }
 
     public void Start()
     {
         health = maxHealth;
-
-        ItemWorld.SpawnItemWorld(new Vector3(5, 0.5f, 5), new Item { itemType = Item.ItemType.Sword, amount = 1});
-        ItemWorld.SpawnItemWorld(new Vector3(-5, 0.5f, 5), new Item { itemType = Item.ItemType.Key, amount = 1 });
-        ItemWorld.SpawnItemWorld(new Vector3(0, 0.5f, -5), new Item { itemType = Item.ItemType.Coin, amount = 1 });
+        inventory = new Inventory();
+        uiInventory.SetInventory(inventory);
     }
 
     public void EnablePowerUp(int powerUp)
@@ -53,6 +49,8 @@ public class GameManager : MonoBehaviour
     }
     public void PlayerDeath()
     {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         SceneManager.LoadScene("DeathScreen");
     }
 }
