@@ -566,6 +566,7 @@ GameObject:
   - component: {fileID: 584719699}
   - component: {fileID: 584719701}
   - component: {fileID: 584719702}
+  - component: {fileID: 584719703}
   m_Layer: 3
   m_Name: PlayerRb
   m_TagString: Player
@@ -658,7 +659,7 @@ MonoBehaviour:
   groundDrag: 5
   jumpKey: 32
   sprintKey: 304
-  crouchKey: 306
+  crouchKey: 99
   jumpForce: 8
   jumpCooldown: 0.25
   airMultiplier: 0.4
@@ -703,6 +704,24 @@ MonoBehaviour:
   exitWallTime: 0.2
   useGravity: 0
   gravityCounterForce: 0
+--- !u!114 &584719703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 584719697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 549db44dfdf8caa4bb43e6a587c7ba92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orientation: {fileID: 230792209}
+  playerObj: {fileID: 584719698}
+  maxSlideTime: 0.75
+  slideForce: 200
+  slideYScale: 0.5
+  slideKey: 306
 --- !u!1 &644225070
 GameObject:
   m_ObjectHideFlags: 0
