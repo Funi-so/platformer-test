@@ -11,6 +11,7 @@ public class PlayerRb : MonoBehaviour
     public float sprintSpeed;
     public float wallrunSpeed;
     public float slideSpeed;
+    public float climbSpeed;
 
     private float desiredMoveSpeed;
     private float lastDesiredMoveSpeed;
@@ -41,14 +42,16 @@ public class PlayerRb : MonoBehaviour
     public float playerHeight;
     public float groundDistance = 0.1f;
     public LayerMask groundMask;
-    bool isGrounded;
+    public bool isGrounded;
 
     [Header("Slope Handling")]
     public float maxSlopeAngle;
     bool exitingSlope = false;
     RaycastHit slopeHit;
 
+    [Header("References")]
     public Transform orientation;
+    public Climbing climbingScript;
 
     float horizontalInput;
     float verticalInput;
@@ -126,6 +129,7 @@ public class PlayerRb : MonoBehaviour
         sprinting,
         crouching,
         sliding,
+        climbing,
         wallrunning,
         air
     }
@@ -133,10 +137,16 @@ public class PlayerRb : MonoBehaviour
     public bool crouching;
     public bool sliding;
     public bool wallrunning;
+    public bool climbing;
     void StateHandler()
     {
+        if (climbing)
+        {
+            state = MovementState.climbing;
+            desiredMoveSpeed = climbSpeed;
+        }
 
-        if (sliding)
+        else if (sliding)
         {
             state = MovementState.sliding;
 
@@ -224,6 +234,8 @@ public class PlayerRb : MonoBehaviour
 
     private void MovePlayer()
     {
+        if(climbingScript.exitingWall) { return; }
+
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
         //on slope

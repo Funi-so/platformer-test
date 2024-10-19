@@ -46,7 +46,6 @@ public class Sliding : MonoBehaviour
         if(Input.GetKeyDown(slideKey) && (horizontalInput != 0 || verticalInput != 0))
         {
             StartSlide();
-            Debug.Log("Key down");
         }
 
         if(Input.GetKeyUp(slideKey) && pm.sliding)
