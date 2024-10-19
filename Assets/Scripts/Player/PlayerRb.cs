@@ -5,10 +5,19 @@ using UnityEngine;
 public class PlayerRb : MonoBehaviour
 {
     [Header("Movement")]
-    float moveSpeed;
+    public float moveSpeed;
+
     public float walkSpeed;
     public float sprintSpeed;
     public float wallrunSpeed;
+    public float slideSpeed;
+
+    private float desiredMoveSpeed;
+    private float lastDesiredMoveSpeed;
+
+    public float speedIncreaseMultiplier;
+    public float slopeIncreaseMultiplier;
+
     public float groundDrag;
 
     [Header("Keybinds")]
@@ -89,7 +98,7 @@ public class PlayerRb : MonoBehaviour
         // Pulo
         if (Input.GetButtonDown("Jump") && readyToJump && isGrounded)
         {
-            Debug.Log("Key down");
+            
             readyToJump = false;
             Jump();
             Invoke(nameof(ResetJump), jumpCooldown);
@@ -115,37 +124,55 @@ public class PlayerRb : MonoBehaviour
     {
         walking,
         sprinting,
-        wallrunning,
         crouching,
+        sliding,
+        wallrunning,
         air
     }
 
     public bool crouching;
+    public bool sliding;
     public bool wallrunning;
     void StateHandler()
     {
-        if(wallrunning)
+
+        if (sliding)
         {
-            moveSpeed = wallrunSpeed;
+            state = MovementState.sliding;
+
+            if(OnSlope() && rb.velocity.y < 0.1f)
+            {
+                desiredMoveSpeed = slideSpeed;
+            }
+            else
+            { 
+                desiredMoveSpeed = sprintSpeed;
+            }
+        }
+        
+        else if(wallrunning)
+        {
+            state = MovementState.wallrunning;
+            desiredMoveSpeed = wallrunSpeed;
         }
 
-        if (crouching)
+        else if (crouching)
         {
             state = MovementState.crouching;
-            moveSpeed = crouchSpeed;
+            desiredMoveSpeed = crouchSpeed;
         }
         // Sprint
-        if (Input.GetKey(sprintKey) && isGrounded)
+        else if (Input.GetKey(sprintKey) && isGrounded)
         {
             state = MovementState.sprinting;
-            moveSpeed = sprintSpeed;
+            desiredMoveSpeed = sprintSpeed;
         }
 
         //Walk
         else if (isGrounded)
         {
             state = MovementState.walking;
-            moveSpeed = walkSpeed;
+            desiredMoveSpeed = walkSpeed;
         }
 
         //Air
@@ -153,6 +180,46 @@ public class PlayerRb : MonoBehaviour
         {
             state = MovementState.air;
         }
+
+        // check if desiredMoveSpeed changed 
+        if(Mathf.Abs(desiredMoveSpeed - lastDesiredMoveSpeed) > 4f && moveSpeed != 0)
+        {
+            StopAllCoroutines();
+            StartCoroutine(SmoothlyLerpMoveSpeed());
+        }
+        else
+        {
+            moveSpeed = desiredMoveSpeed;
+        }
+
+        lastDesiredMoveSpeed = desiredMoveSpeed;
+    }
+
+    private IEnumerator SmoothlyLerpMoveSpeed()
+    {
+
+        // lerp movespeed to desired value
+        float time = 0;
+        float difference = Mathf.Abs(desiredMoveSpeed - moveSpeed);
+        float startValue = moveSpeed;
+            
+        while (time < difference)
+        {
+            moveSpeed = Mathf.Lerp(startValue, desiredMoveSpeed, time/difference);
+
+            if (OnSlope())
+            {
+                float slopeAngle = Vector3.Angle(Vector3.up, slopeHit.normal);
+                float slopeAngleIncrease = 1 + (slopeAngle / 90f);
+
+                time += Time.deltaTime * speedIncreaseMultiplier * slopeIncreaseMultiplier * slopeAngleIncrease;
+            }
+            else
+                time += Time.deltaTime * speedIncreaseMultiplier;
+            yield return null;
+        }
+
+        moveSpeed = desiredMoveSpeed;
     }
 
     private void MovePlayer()
@@ -162,7 +229,7 @@ public class PlayerRb : MonoBehaviour
         //on slope
         if (OnSlope() && !exitingSlope)
         {
-            rb.AddForce(GetSlopeMoveDirection() * moveSpeed * 20f, ForceMode.Force); 
+            rb.AddForce(GetSlopeMoveDirection(moveDirection) * moveSpeed * 20f, ForceMode.Force); 
 
             //if(rb.velocity.y > 0)
             {
@@ -223,7 +290,7 @@ public class PlayerRb : MonoBehaviour
         exitingSlope = false;
     }
 
-    private bool OnSlope()
+    public bool OnSlope()
     {
         if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
         {
@@ -233,8 +300,8 @@ public class PlayerRb : MonoBehaviour
 
         return false;
     }
-    private Vector3 GetSlopeMoveDirection() 
+    public Vector3 GetSlopeMoveDirection(Vector3 direction) 
     { 
-        return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
+        return Vector3.ProjectOnPlane(direction, slopeHit.normal).normalized;
     }
 }

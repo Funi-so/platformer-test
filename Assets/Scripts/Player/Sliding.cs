@@ -6,6 +6,7 @@ public class Sliding : MonoBehaviour
     [Header("References")]
     public Transform orientation;
     public Transform playerObj;
+    public FirstPersonCamera cam;
     Rigidbody rb;
     PlayerRb pm;
 
@@ -21,7 +22,6 @@ public class Sliding : MonoBehaviour
     public KeyCode slideKey = KeyCode.LeftControl;
     float horizontalInput;
     float verticalInput;
-    bool sliding;
 
     private void Start()
     {
@@ -33,7 +33,7 @@ public class Sliding : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(sliding) 
+        if(pm.sliding) 
         { 
             SlidingMovement(); 
         }
@@ -46,10 +46,10 @@ public class Sliding : MonoBehaviour
         if(Input.GetKeyDown(slideKey) && (horizontalInput != 0 || verticalInput != 0))
         {
             StartSlide();
-
+            Debug.Log("Key down");
         }
 
-        if(Input.GetKeyUp(slideKey) && sliding)
+        if(Input.GetKeyUp(slideKey) && pm.sliding)
         {
             StopSlide();
         }
@@ -57,31 +57,46 @@ public class Sliding : MonoBehaviour
 
     private void StartSlide()
     {
-        sliding = true;
+        pm.sliding = true;
+        slideTimer = maxSlideTime;
 
         playerObj.localScale = new Vector3(playerObj.localScale.x, slideYScale, playerObj.localScale.z);
         rb.AddForce(Vector3.down *5f, ForceMode.Impulse);
+
+        cam.DoFov(95f);
     }
 
     private void SlidingMovement()
     {
         Vector3 inputDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
-        rb.AddForce(inputDirection.normalized * slideForce, ForceMode.Force);
+        //sliding normally
+        if (!pm.OnSlope() || rb.velocity.y > 0.1f)
+        {
+            rb.AddForce(inputDirection.normalized * slideForce, ForceMode.Force);
 
-        slideTimer -= Time.deltaTime;
+            slideTimer -= Time.deltaTime;
+        }
 
+        else
+        {
+
+            rb.AddForce(pm.GetSlopeMoveDirection(inputDirection) * slideForce, ForceMode.Force);
+        }
+            
         if(slideTimer <= 0) 
         {
-            StopSlide() ;
+            StopSlide();
         }
+
     }
 
     private void StopSlide()
     {
-        sliding = false;
+        pm.sliding = false;
 
         playerObj.localScale = new Vector3(playerObj.localScale.x, startYScale, playerObj.localScale.z);
 
+        cam.DoFov(90f);
     }
 }
