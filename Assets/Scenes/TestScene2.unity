@@ -772,17 +772,30 @@ MonoBehaviour:
   sprintKey: 304
   crouchKey: 99
   jumpForce: 8
+  jumpHoldForce: 1
   jumpCooldown: 0.25
   airMultiplier: 0.4
+  gravityMultiplier: 1
+  jumpStartTime: 0.25
+  coyoteTime: 0.2
+  jumpBufferTime: 0.2
   crouchSpeed: 4
   crouchYScale: 0.5
   playerHeight: 2
-  groundDistance: 0.1
+  groundDistance: 0.15
   groundMask:
     serializedVersion: 2
     m_Bits: 64
   isGrounded: 0
   maxSlopeAngle: 40
+  canGrabOnto:
+    serializedVersion: 2
+    m_Bits: 0
+  downRayLength: 1.5
+  fwdRayLength: 0.7
+  forwardOffset: -0.1
+  upOffset: -1
+  ledgeJumpTime: 0.1
   orientation: {fileID: 315047417}
   climbingScript: {fileID: 584719704}
   state: 0
@@ -790,6 +803,10 @@ MonoBehaviour:
   sliding: 0
   wallrunning: 0
   climbing: 0
+  hanging: 0
+  freeze: 0
+  unlimited: 0
+  restricted: 0
 --- !u!114 &584719702
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -862,7 +879,7 @@ MonoBehaviour:
   rb: {fileID: 584719700}
   isWall:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 0
   detectionLength: 0.7
   sphereCastRadius: 0.25
   maxWallLookAngle: 30

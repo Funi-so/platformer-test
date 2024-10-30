@@ -191,6 +191,8 @@ public class WallRunning : MonoBehaviour
 
     private void WallJump()
     {
+        if (pm.isGrounded) return;
+
         exitingWall = true;
         exitWallTimer = exitWallTime;
 
