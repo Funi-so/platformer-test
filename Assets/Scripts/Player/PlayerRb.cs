@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerRb : MonoBehaviour
@@ -10,6 +8,8 @@ public class PlayerRb : MonoBehaviour
 
     public float walkSpeed;
     public float sprintSpeed;
+
+    public float dashSpeed;
     public float wallrunSpeed;
     public float slideSpeed;
     public float climbSpeed;
@@ -17,9 +17,12 @@ public class PlayerRb : MonoBehaviour
     private float desiredMoveSpeed;
     private float lastDesiredMoveSpeed;
 
-    public float speedIncreaseMultiplier;
+    public float boostFactor;
+    public float dashSpeedChangeFactor;
     public float slopeIncreaseMultiplier;
+    private float startBoostFactor;
 
+    public float maxYSpeed;
     public float groundDrag;
 
     [Header("Keybinds")]
@@ -88,6 +91,7 @@ public class PlayerRb : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
 
+        startBoostFactor = boostFactor;
         startYScale = transform.localScale.y;
     }
 
@@ -98,11 +102,14 @@ public class PlayerRb : MonoBehaviour
         if (isGrounded)
         {
             jumpWindow = Time.time + coyoteTime;
-            rb.drag = groundDrag;
+        }
+        if (state == MovementState.walking || state == MovementState.crouching || state == MovementState.sprinting)
+        {
+             rb.drag = groundDrag;
         }
         else
         {
-            rb.drag = 0;
+             rb.drag = 0;
         }
 
         rb.rotation = orientation.rotation;
@@ -119,7 +126,6 @@ public class PlayerRb : MonoBehaviour
     {
         MovePlayer();
     }
-
 
     private void MyInput()
     {
@@ -149,6 +155,7 @@ public class PlayerRb : MonoBehaviour
         unlimited,
         walking,
         sprinting,
+        dashing,
         crouching,
         sliding,
         climbing,
@@ -159,6 +166,7 @@ public class PlayerRb : MonoBehaviour
 
     bool keepMomentum;
 
+    public bool dashing;
     public bool crouching;
     public bool sliding;
     public bool wallrunning;
@@ -184,6 +192,14 @@ public class PlayerRb : MonoBehaviour
             return;
         }
 
+        else if (dashing)
+        {
+            state = MovementState.dashing;
+            desiredMoveSpeed = dashSpeed;
+            boostFactor = dashSpeedChangeFactor;
+            keepMomentum = true;
+        }
+
         else if (climbing)
         {
             state = MovementState.climbing;
@@ -203,6 +219,7 @@ public class PlayerRb : MonoBehaviour
             if(OnSlope() && rb.velocity.y < 0.1f)
             {
                 desiredMoveSpeed = slideSpeed;
+                boostFactor = startBoostFactor;
                 keepMomentum = true;
             }
             else
@@ -292,10 +309,10 @@ public class PlayerRb : MonoBehaviour
                 float slopeAngle = Vector3.Angle(Vector3.up, slopeHit.normal);
                 float slopeAngleIncrease = 1 + (slopeAngle / 90f);
 
-                time += Time.deltaTime * speedIncreaseMultiplier * slopeIncreaseMultiplier * slopeAngleIncrease;
+                time += Time.deltaTime * boostFactor * slopeIncreaseMultiplier * slopeAngleIncrease;
             }
             else
-                time += Time.deltaTime * speedIncreaseMultiplier;
+                time += Time.deltaTime * boostFactor;
             yield return null;
         }
 
@@ -353,6 +370,12 @@ public class PlayerRb : MonoBehaviour
                 Vector3 limitedVel = flatVel.normalized * moveSpeed;
                 rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
             }
+        }
+
+        // Limita velocidade em Y
+        if (maxYSpeed != 0 && rb.velocity.y > maxYSpeed)
+        {
+            rb.velocity = new Vector3(rb.velocity.x, maxYSpeed, rb.velocity.z);
         }
     }
 

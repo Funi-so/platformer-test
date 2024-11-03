@@ -673,6 +673,7 @@ GameObject:
   - component: {fileID: 584719703}
   - component: {fileID: 584719702}
   - component: {fileID: 584719704}
+  - component: {fileID: 584719705}
   m_Layer: 3
   m_Name: PlayerRb
   m_TagString: Player
@@ -762,14 +763,17 @@ MonoBehaviour:
   moveSpeed: 0
   walkSpeed: 7
   sprintSpeed: 10
+  dashSpeed: 20
   wallrunSpeed: 15
   slideSpeed: 30
   climbSpeed: 3
-  speedIncreaseMultiplier: 1.5
+  boostFactor: 0
+  dashSpeedChangeFactor: 50
   slopeIncreaseMultiplier: 2.5
+  maxYSpeed: 0
   groundDrag: 4
   jumpKey: 32
-  sprintKey: 304
+  sprintKey: 0
   crouchKey: 99
   jumpForce: 8
   jumpHoldForce: 1
@@ -799,6 +803,7 @@ MonoBehaviour:
   orientation: {fileID: 315047417}
   climbingScript: {fileID: 584719704}
   state: 0
+  dashing: 0
   crouching: 0
   sliding: 0
   wallrunning: 0
@@ -863,7 +868,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 584719697}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 484a6b917c57ce44a812156581773e19, type: 3}
   m_Name: 
@@ -886,6 +891,30 @@ MonoBehaviour:
   minWallNormalAngleChange: 5
   exitingWall: 0
   exitWallTime: 0.2
+--- !u!114 &584719705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 584719697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ddcb033386c73947b15f68a4e99a05f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orientation: {fileID: 315047417}
+  playerCam: {fileID: 931498456}
+  dashForce: 20
+  dashUpwardForce: 0
+  maxDashYSpeed: 0
+  dashDuration: 0.25
+  dashCd: 1.5
+  dashKey: 304
+  useCameraForward: 0
+  allowAllDirections: 1
+  disableGravity: 1
+  resetVel: 1
 --- !u!1 &607437891
 GameObject:
   m_ObjectHideFlags: 0
@@ -2720,7 +2749,7 @@ Transform:
   m_GameObject: {fileID: 1689034180}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.33, z: 0}
+  m_LocalPosition: {x: -6.217, y: 1.33, z: 27.197}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
