@@ -1,5 +1,7 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
+using static UnityEditor.Searcher.SearcherWindow.Alignment;
 
 public class PlayerRb : MonoBehaviour
 {
@@ -24,6 +26,9 @@ public class PlayerRb : MonoBehaviour
 
     public float maxYSpeed;
     public float groundDrag;
+
+    private float turnSmoothTime = 0.05f;
+    private float turnSmoothVelocity;
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
@@ -78,6 +83,8 @@ public class PlayerRb : MonoBehaviour
 
     [Header("References")]
     public Transform orientation;
+    public Animator animator;
+    public Camera cam;
     public Climbing climbingScript;
 
     float horizontalInput;
@@ -125,6 +132,7 @@ public class PlayerRb : MonoBehaviour
     private void FixedUpdate()
     {
         MovePlayer();
+        AnimationHandler();
     }
 
     private void MyInput()
@@ -324,8 +332,9 @@ public class PlayerRb : MonoBehaviour
         if(restricted) { return; }
         //if(climbingScript.exitingWall) { return; }
 
-        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+        //moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
+        Vector3 dir = new Vector3(horizontalInput, 0f, verticalInput).normalized;
         // Em uma slope (chão declinado)
         if (OnSlope() && !exitingSlope)
         {
@@ -337,13 +346,22 @@ public class PlayerRb : MonoBehaviour
             }
         }
 
-        if (isGrounded)
+        if (dir.magnitude >= 0.1f)
         {
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
-        }
-        else if (!isGrounded)
-        {
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
+            float targetAngle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg + cam.transform.eulerAngles.y;
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
+            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+
+            if (isGrounded)
+            {
+                rb.AddForce(moveDir.normalized * moveSpeed * 10f, ForceMode.Force);
+            }
+            else if (!isGrounded)
+            {
+                rb.AddForce(moveDir.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
+            }
         }
 
         if (!wallrunning) { rb.useGravity = !OnSlope(); }
@@ -524,4 +542,22 @@ public class PlayerRb : MonoBehaviour
         restricted = false;
     }
 
+    void AnimationHandler()
+    {
+        if (isGrounded)
+        {
+            if (rb.velocity.magnitude <= 0.1f)
+            {
+                animator.SetFloat("Speed", 0f);
+            }
+            else if (rb.velocity.magnitude >= 2 && state == MovementState.walking)
+            {
+                animator.SetFloat("Speed", .2f);
+            }
+            else if(state == MovementState.sprinting)
+            {
+                animator.SetFloat("Speed", 1f);
+            }
+        }
+    }
 }
