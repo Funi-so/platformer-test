@@ -813,7 +813,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Texture2DMaterialSlot",
     "m_ObjectId": "26bfbecc8e1e9389be322fae3750f0e8",
     "m_Id": 0,
-    "m_DisplayName": "Albedo Texture 2",
+    "m_DisplayName": "Texture 2",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -1001,7 +1001,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Texture2DMaterialSlot",
     "m_ObjectId": "3ad1d05ae099748399dbfe2db5540c35",
     "m_Id": 0,
-    "m_DisplayName": "Albedo Texture 1",
+    "m_DisplayName": "Texture 1",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -1128,10 +1128,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -2163.0,
-            "y": -381.99993896484377,
-            "width": 174.0001220703125,
-            "height": 33.999969482421878
+            "x": -2165.0,
+            "y": -379.00006103515627,
+            "width": 173.9998779296875,
+            "height": 34.000030517578128
         }
     },
     "m_Slots": [
@@ -1236,11 +1236,11 @@
     "m_Guid": {
         "m_GuidSerialized": "949a9de9-3ce4-4428-a3cd-1323b7718102"
     },
-    "m_Name": "Albedo Texture 4",
+    "m_Name": "Texture 4",
     "m_DefaultRefNameVersion": 0,
     "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "",
-    "m_OverrideReferenceName": "_AlbedoTexture4",
+    "m_OverrideReferenceName": "_Texture4",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
     "m_CustomSlotLabel": "",
@@ -1513,11 +1513,11 @@
     "m_Guid": {
         "m_GuidSerialized": "57b6bb20-8303-4b90-83e3-ffa48f7777be"
     },
-    "m_Name": "Albedo Texture 1",
+    "m_Name": "Texture 1",
     "m_DefaultRefNameVersion": 0,
     "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "",
-    "m_OverrideReferenceName": "_AlbedoTexture1",
+    "m_OverrideReferenceName": "_Texture1",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
     "m_CustomSlotLabel": "",
@@ -1812,7 +1812,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Texture2DMaterialSlot",
     "m_ObjectId": "8017191ebc025b85a0c9c743dd66c815",
     "m_Id": 0,
-    "m_DisplayName": "Albedo Texture 3",
+    "m_DisplayName": "Texture 3",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -2544,7 +2544,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Texture2DMaterialSlot",
     "m_ObjectId": "cc4957c28d6f8a879736b99c73585dd1",
     "m_Id": 0,
-    "m_DisplayName": "Albedo Texture 4",
+    "m_DisplayName": "Texture 4",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -2882,11 +2882,11 @@
     "m_Guid": {
         "m_GuidSerialized": "041d3791-3137-4939-a0d7-d219b1765d88"
     },
-    "m_Name": "Albedo Texture 3",
+    "m_Name": "Texture 3",
     "m_DefaultRefNameVersion": 0,
     "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "",
-    "m_OverrideReferenceName": "_AlbedoTexture3",
+    "m_OverrideReferenceName": "_Texture3",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
     "m_CustomSlotLabel": "",
@@ -3098,10 +3098,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1129.0,
-            "y": 403.00006103515627,
-            "width": 119.0,
-            "height": 149.00001525878907
+            "x": -1546.0,
+            "y": 415.0,
+            "width": 120.0,
+            "height": 149.0
         }
     },
     "m_Slots": [
@@ -3140,11 +3140,11 @@
     "m_Guid": {
         "m_GuidSerialized": "3712a6ae-9ec3-4732-a487-8e19fbfa14bb"
     },
-    "m_Name": "Albedo Texture 2",
+    "m_Name": "Texture 2",
     "m_DefaultRefNameVersion": 0,
     "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "",
-    "m_OverrideReferenceName": "_AlbedoTexture2",
+    "m_OverrideReferenceName": "_Texture2",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
     "m_CustomSlotLabel": "",
