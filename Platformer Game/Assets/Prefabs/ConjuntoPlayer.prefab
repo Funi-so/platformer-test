@@ -28,9 +28,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4922450665938807}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.031638555, y: 0.000000034530412, z: -0.0000000010930394,
-    w: 0.9994994}
-  m_LocalPosition: {x: 0, y: 1.712, z: -5}
+  m_LocalRotation: {x: 0.08589197, y: -0.43367463, z: 0.041572608, w: 0.8960026}
+  m_LocalPosition: {x: 27.239183, y: 8.036132, z: 28.903343}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2461,7 +2460,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2277448511909238550}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.03163855, y: -0.000000017064453, z: 5.401651e-10, w: 0.9994994}
+  m_LocalRotation: {x: 0.031638555, y: 0.000000011817045, z: -3.7406142e-10, w: 0.9994994}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3148,7 +3147,7 @@ Transform:
   m_GameObject: {fileID: 3128750471792286343}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.712, z: -5}
+  m_LocalPosition: {x: 0, y: 1.7119999, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5106,7 +5105,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5244542935378674971}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.14521314, y: -8.619646e-15, z: 9.284736e-16, w: 0.98940045}
+  m_LocalRotation: {x: 0.14521313, y: -0, z: -0, w: 0.9894004}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -7014,18 +7013,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 0
   walkSpeed: 6
-  sprintSpeed: 10
+  sprintSpeed: 8
   dashSpeed: 20
   wallrunSpeed: 15
   slideSpeed: 30
   climbSpeed: 3
   boostFactor: 0
+  walkFactor: 1
+  sprintStopFactor: 200
   dashSpeedChangeFactor: 50
   slopeIncreaseMultiplier: 2.5
   maxYSpeed: 0
   groundDrag: 5
   jumpKey: 32
-  sprintKey: 304
+  walkKey: 304
   crouchKey: 99
   jumpForce: 8
   jumpHoldForce: 1
@@ -7036,9 +7037,9 @@ MonoBehaviour:
   coyoteTime: 0.2
   jumpBufferTime: 0.2
   crouchSpeed: 4
-  crouchYScale: 0.5
-  playerHeight: 2
-  groundDistance: 0.15
+  crouchYScale: 1
+  playerHeight: 1.8
+  groundDistance: 0.2
   groundMask:
     serializedVersion: 2
     m_Bits: 193
@@ -8452,7 +8453,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8159429597284382143}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.10917738, y: 0.000000017629906, z: -0.0000000019363622, w: 0.9940223}
+  m_LocalRotation: {x: 0.10917737, y: 0.000000013027084, z: -0.000000001430816, w: 0.9940223}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

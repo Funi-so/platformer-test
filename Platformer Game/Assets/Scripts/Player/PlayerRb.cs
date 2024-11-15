@@ -20,6 +20,8 @@ public class PlayerRb : MonoBehaviour
     private float lastDesiredMoveSpeed;
 
     public float boostFactor;
+    public float walkFactor;
+    public float sprintStopFactor;
     public float dashSpeedChangeFactor;
     public float slopeIncreaseMultiplier;
     private float startBoostFactor;
@@ -27,12 +29,13 @@ public class PlayerRb : MonoBehaviour
     public float maxYSpeed;
     public float groundDrag;
 
+    private bool pressingInputKeys;
     private float turnSmoothTime = 0.05f;
     private float turnSmoothVelocity;
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
-    public KeyCode sprintKey = KeyCode.LeftShift;
+    public KeyCode walkKey = KeyCode.LeftShift;
     public KeyCode crouchKey = KeyCode.LeftControl;
 
     [Header("Jump")]
@@ -133,12 +136,23 @@ public class PlayerRb : MonoBehaviour
     {
         MovePlayer();
         AnimationHandler();
+
+        Debug.Log("On Slope = " + OnSlope() + ", Speed = " + rb.velocity.magnitude + ", Movespeed = " + moveSpeed);
     }
 
     private void MyInput()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
+
+        if(horizontalInput != 0f || verticalInput != 0f)
+        {
+            pressingInputKeys = true;
+        }
+        else 
+        {
+            pressingInputKeys = false;
+        }
 
         if (Input.GetKeyDown(crouchKey) && isGrounded)
         {
@@ -247,25 +261,31 @@ public class PlayerRb : MonoBehaviour
             state = MovementState.crouching;
             desiredMoveSpeed = crouchSpeed;
         }
-        //Corrida
-        else if (Input.GetKey(sprintKey) && isGrounded)
-        {
-            state = MovementState.sprinting;
-            desiredMoveSpeed = sprintSpeed;
-        }
 
         //Caminhada
-        else if (isGrounded)
+        else if (Input.GetKey(walkKey) && isGrounded)
         {
             state = MovementState.walking;
             desiredMoveSpeed = walkSpeed;
         }
-
+        //Corrida
         //Ar
-        else
+        else if(!isGrounded)
         {
             state = MovementState.air;
         }
+
+        else if (isGrounded)
+        {
+            state = MovementState.sprinting;
+            desiredMoveSpeed = sprintSpeed;
+            if(pressingInputKeys)
+            boostFactor = walkFactor;
+            else
+            boostFactor = sprintStopFactor;
+            keepMomentum = true;
+        }
+
 
         bool desiredMoveSpeedHasChanged = desiredMoveSpeed != lastDesiredMoveSpeed;
 
@@ -286,7 +306,7 @@ public class PlayerRb : MonoBehaviour
             if(Mathf.Abs(desiredMoveSpeed - moveSpeed - moveSpeed) < 0.1f) keepMomentum = false;
         }
 
-        //Checa se a desiredMoveSpeed mudou drásticamente
+        //Checa se a desiredMoveSpeed mudou drï¿½sticamente
         if(Mathf.Abs(desiredMoveSpeed - lastDesiredMoveSpeed) > 4f && moveSpeed != 0)
         {
             StopAllCoroutines();
@@ -335,18 +355,18 @@ public class PlayerRb : MonoBehaviour
         //moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
         Vector3 dir = new Vector3(horizontalInput, 0f, verticalInput).normalized;
-        // Em uma slope (chão declinado)
+        // Em uma slope (chÃ£o declinado)
         if (OnSlope() && !exitingSlope)
         {
-            rb.AddForce(GetSlopeMoveDirection(moveDirection) * moveSpeed * 20f, ForceMode.Force); 
+            rb.AddForce(GetSlopeMoveDirection(moveDirection) * moveSpeed * 50f, ForceMode.Force); 
 
-            //if(rb.velocity.y > 0)
+            if(rb.velocity.y > 0)
             {
                 rb.AddForce(Vector3.down * 80f, ForceMode.Force);
             }
         }
 
-        if (dir.magnitude >= 0.1f)
+        if (pressingInputKeys)
         {
             float targetAngle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg + cam.transform.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
@@ -362,7 +382,7 @@ public class PlayerRb : MonoBehaviour
             {
                 rb.AddForce(moveDir.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
             }
-        }
+        } 
 
         if (!wallrunning) { rb.useGravity = !OnSlope(); }
     }
@@ -378,7 +398,7 @@ public class PlayerRb : MonoBehaviour
         }
 
 
-        // Limita velocidade no chão ou no ar
+        // Limita velocidade no chï¿½o ou no ar
 
         else
         {
@@ -400,7 +420,7 @@ public class PlayerRb : MonoBehaviour
     private void Jump()
     {
 
-        //Pulo (Caso aperte o botão ou pelo Jump Buffer)
+        //Pulo (Caso aperte o botï¿½o ou pelo Jump Buffer)
         if (Input.GetButtonDown("Jump"))
         {
             if(hanging) LedgeJump();
@@ -419,7 +439,7 @@ public class PlayerRb : MonoBehaviour
 
             }
 
-            //Caso aperte botão de pulo fora do chão começa a contar timer do jump buffer
+            //Caso aperte botï¿½o de pulo fora do chï¿½o comeï¿½a a contar timer do jump buffer
             else if (!isGrounded && Time.time >= jumpWindow)
             {
                 jumpBuffer = true;
@@ -427,19 +447,19 @@ public class PlayerRb : MonoBehaviour
             }
         }
 
-        //Se tiver apertado botão de pulo fora do chão, quando encostar no chão vai resetar ele (e pular, código ali em cima)
+        //Se tiver apertado botï¿½o de pulo fora do chï¿½o, quando encostar no chï¿½o vai resetar ele (e pular, cï¿½digo ali em cima)
         if (jumpBuffer && isGrounded && Time.time <= jumpBufferTimer)
         {
             jumpBuffer = false;
         }
 
-        //E caso apertar o botão de pulo cedo demais não funciona
+        //E caso apertar o botï¿½o de pulo cedo demais nï¿½o funciona
         else if (jumpBuffer && Time.time >= jumpBufferTimer)
         {
             jumpBuffer = false;
         }
 
-        //Se continuar apertando o botão de pulo, fica no ar por mais tempo
+        //Se continuar apertando o botï¿½o de pulo, fica no ar por mais tempo
         if (Input.GetButton("Jump") && isJumping)
         {
             rb.AddForce(Vector3.up * jumpHoldForce, ForceMode.Force);
@@ -474,6 +494,8 @@ public class PlayerRb : MonoBehaviour
     {
         if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
         {
+            Debug.Log("Executing Slope");
+            Debug.DrawRay(transform.position, slopeHit.point, Color.red);
             float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
             return angle < maxSlopeAngle && angle != 0;
         }
@@ -546,18 +568,10 @@ public class PlayerRb : MonoBehaviour
     {
         if (isGrounded)
         {
-            if (rb.velocity.magnitude <= 0.1f)
+            //if (rb.velocity.magnitude <= 0.1f)
             {
-                animator.SetFloat("Speed", 0f);
+                animator.SetFloat("Speed", rb.velocity.magnitude/10);
             }
-            else if (rb.velocity.magnitude >= 2 && state == MovementState.walking)
-            {
-                animator.SetFloat("Speed", .2f);
-            }
-            else if(state == MovementState.sprinting)
-            {
-                animator.SetFloat("Speed", 1f);
-            }
-        }
+        } else animator.SetFloat("Speed", 0);
     }
 }
