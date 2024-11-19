@@ -135,9 +135,8 @@ public class PlayerRb : MonoBehaviour
     private void FixedUpdate()
     {
         MovePlayer();
-        AnimationHandler();
 
-        Debug.Log("On Slope = " + OnSlope() + ", Speed = " + rb.velocity.magnitude + ", Movespeed = " + moveSpeed);
+        //Debug.Log("On Slope = " + OnSlope() + ", Speed = " + rb.velocity.magnitude + ", Movespeed = " + moveSpeed);
     }
 
     private void MyInput()
@@ -265,18 +264,6 @@ public class PlayerRb : MonoBehaviour
         //Caminhada
         else if (Input.GetKey(walkKey) && isGrounded)
         {
-            state = MovementState.walking;
-            desiredMoveSpeed = walkSpeed;
-        }
-        //Corrida
-        //Ar
-        else if(!isGrounded)
-        {
-            state = MovementState.air;
-        }
-
-        else if (isGrounded)
-        {
             state = MovementState.sprinting;
             desiredMoveSpeed = sprintSpeed;
             if(pressingInputKeys)
@@ -285,6 +272,17 @@ public class PlayerRb : MonoBehaviour
             boostFactor = sprintStopFactor;
             keepMomentum = true;
         }
+        else if ( isGrounded)
+        {
+            state = MovementState.walking;
+            desiredMoveSpeed = walkSpeed;
+        }
+        //Corrida
+        //Ar
+        else {
+            state = MovementState.air;
+        }
+
 
 
         bool desiredMoveSpeedHasChanged = desiredMoveSpeed != lastDesiredMoveSpeed;
@@ -494,8 +492,6 @@ public class PlayerRb : MonoBehaviour
     {
         if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
         {
-            Debug.Log("Executing Slope");
-            Debug.DrawRay(transform.position, slopeHit.point, Color.red);
             float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
             return angle < maxSlopeAngle && angle != 0;
         }
@@ -562,16 +558,5 @@ public class PlayerRb : MonoBehaviour
     {
         yield return new WaitForSeconds(waitTime);
         restricted = false;
-    }
-
-    void AnimationHandler()
-    {
-        if (isGrounded)
-        {
-            //if (rb.velocity.magnitude <= 0.1f)
-            {
-                animator.SetFloat("Speed", rb.velocity.magnitude/10);
-            }
-        } else animator.SetFloat("Speed", 0);
     }
 }
