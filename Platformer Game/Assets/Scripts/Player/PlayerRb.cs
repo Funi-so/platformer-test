@@ -475,7 +475,7 @@ public class PlayerRb : MonoBehaviour
         }
            
         //Se estiver caindo, a "gravidade" aumenta
-        if(rb.velocity.y < 0 && !OnSlope() && !hanging) 
+        if(rb.velocity.y < 0 && !OnSlope() && !hanging && !climbing) 
             { 
                 rb.AddForce(Vector3.down * gravityMultiplier, ForceMode.Force);
             }

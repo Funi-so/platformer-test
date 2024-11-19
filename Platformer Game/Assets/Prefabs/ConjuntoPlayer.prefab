@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4922450665938807}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.02653269, y: -0.0000000038760404, z: 1.0287798e-10, w: 0.999648}
+  m_LocalRotation: {x: 0.02653269, y: 0.0000000038760404, z: -1.0287798e-10, w: 0.999648}
   m_LocalPosition: {x: 0, y: 1.7119999, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4280,7 +4280,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2277448511909238550}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.026532687, y: -0.0000000010750201, z: 2.8533216e-11, w: 0.999648}
+  m_LocalRotation: {x: 0.026532687, y: 0.0000000010750202, z: -2.8533217e-11, w: 0.999648}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -13035,11 +13035,11 @@ MonoBehaviour:
   maxSlopeAngle: 40
   canGrabOnto:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 193
   downRayLength: 1.5
   fwdRayLength: 0.7
-  forwardOffset: -0.1
-  upOffset: -1
+  forwardOffset: -0.3
+  upOffset: -0.8
   ledgeJumpTime: 0.1
   orientation: {fileID: 6803265335426490554}
   animator: {fileID: 3878298021130055455}
@@ -13111,7 +13111,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6718452833320245427}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 484a6b917c57ce44a812156581773e19, type: 3}
   m_Name: 
@@ -13127,7 +13127,7 @@ MonoBehaviour:
   rb: {fileID: 3089682297591616705}
   isWall:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   detectionLength: 0.7
   sphereCastRadius: 0.25
   maxWallLookAngle: 30

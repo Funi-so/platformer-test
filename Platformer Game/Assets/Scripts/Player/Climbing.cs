@@ -7,6 +7,7 @@ public class Climbing : MonoBehaviour
     [Header("Climbing")]
     public float climbSpeed;
     public float maxClimbTime;
+    public bool useGravity;
     private float climbTimer;
 
     [Header("Climb Jumping")]
@@ -101,7 +102,9 @@ public class Climbing : MonoBehaviour
     private void StartClimbing() 
     {
         rb.velocity = new Vector3 (rb.velocity.x, 0f, rb.velocity.z);
+        rb.useGravity = useGravity;
         pm.climbing = true;
+        pm.restricted = true;
 
         lastWall = frontWallHit.transform;
         lastWallNormal = frontWallHit.normal;
@@ -115,6 +118,8 @@ public class Climbing : MonoBehaviour
     private void StopClimbing()
     {
         pm.climbing = false;
+        rb.useGravity = true;
+        pm.restricted = false;
     }
 
     private void ClimbJump()
