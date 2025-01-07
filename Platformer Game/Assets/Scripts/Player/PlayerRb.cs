@@ -54,6 +54,9 @@ public class PlayerRb : MonoBehaviour
     private float jumpBufferTimer;
     private bool isJumping;
 
+    private bool jumpMovement; // habilita executar movimento do pulo
+    private bool holdJump; // habilita executar movimento do pulo segurado
+
     bool jumpBuffer;
     bool fallingFromJump;
 
@@ -130,12 +133,13 @@ public class PlayerRb : MonoBehaviour
 
         Jump();
         LedgeGrab();
+
+        Physics.SyncTransforms();
     }
 
     private void FixedUpdate()
     {
         MovePlayer();
-
         //Debug.Log("On Slope = " + OnSlope() + ", Speed = " + rb.velocity.magnitude + ", Movespeed = " + moveSpeed);
     }
 
@@ -347,6 +351,9 @@ public class PlayerRb : MonoBehaviour
 
     private void MovePlayer()
     {
+        if(jumpMovement) JumpMovement();
+        if(holdJump) JumpHoldMovement();
+
         if(restricted) { return; }
         //if(climbingScript.exitingWall) { return; }
 
@@ -356,9 +363,9 @@ public class PlayerRb : MonoBehaviour
         // Em uma slope (chão declinado)
         if (OnSlope() && !exitingSlope)
         {
-            rb.AddForce(GetSlopeMoveDirection(moveDirection) * moveSpeed * 50f, ForceMode.Force); 
+            rb.AddForce(GetSlopeMoveDirection(moveDirection) * moveSpeed * 80f, ForceMode.Force); 
 
-            if(rb.velocity.y > 0)
+            if(rb.velocity.y < 0 && (horizontalInput> 0 || verticalInput > 0))
             {
                 rb.AddForce(Vector3.down * 80f, ForceMode.Force);
             }
@@ -418,7 +425,7 @@ public class PlayerRb : MonoBehaviour
     private void Jump()
     {
 
-        //Pulo (Caso aperte o bot�o ou pelo Jump Buffer)
+        //Pulo (Caso aperte o botao ou pelo Jump Buffer)
         if (Input.GetButtonDown("Jump"))
         {
             if(hanging) LedgeJump();
@@ -429,9 +436,10 @@ public class PlayerRb : MonoBehaviour
                 isJumping = true;
                 jumpTime = jumpStartTime;
 
-                rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+                //rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+                jumpMovement = true;
 
-                rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+                //rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
 
                 Invoke(nameof(ResetJump), jumpCooldown);
 
@@ -442,6 +450,10 @@ public class PlayerRb : MonoBehaviour
             {
                 jumpBuffer = true;
                 jumpBufferTimer = Time.time + jumpBufferTime;
+            }
+
+            else {
+                jumpMovement = false;
             }
         }
 
@@ -460,13 +472,15 @@ public class PlayerRb : MonoBehaviour
         //Se continuar apertando o bot�o de pulo, fica no ar por mais tempo
         if (Input.GetButton("Jump") && isJumping)
         {
-            rb.AddForce(Vector3.up * jumpHoldForce, ForceMode.Force);
+            //rb.AddForce(Vector3.up * jumpHoldForce, ForceMode.Force);
+            holdJump = true;
             jumpTime -= Time.deltaTime;
             
         }
         else
         {
             isJumping = false;
+            holdJump = false;
         }
 
         if (Input.GetButtonUp("Jump"))
@@ -480,7 +494,12 @@ public class PlayerRb : MonoBehaviour
                 rb.AddForce(Vector3.down * gravityMultiplier, ForceMode.Force);
             }
     }
+    private void JumpMovement(){
+        rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+        jumpMovement = false;
+    }
 
+    private void JumpHoldMovement(){rb.AddForce(Vector3.up * jumpHoldForce, ForceMode.Force);}
     private void ResetJump()
     {
         //readyToJump = true;
@@ -508,10 +527,10 @@ public class PlayerRb : MonoBehaviour
         if (rb.velocity.y < 0 && !hanging)
         {
             RaycastHit downHit;
-            Vector3 lineDownStart = (transform.position + Vector3.up * downRayLength) + transform.forward;
-            Vector3 lineDownEnd = (transform.position + Vector3.up * fwdRayLength) + transform.forward;
+            Vector3 lineDownStart = transform.position + Vector3.up * downRayLength + transform.forward;
+            Vector3 lineDownEnd = transform.position + Vector3.up * fwdRayLength + transform.forward;
             Physics.Linecast(lineDownStart, lineDownEnd, out downHit, canGrabOnto);
-            Debug.DrawLine(lineDownStart, lineDownEnd);
+            Debug.DrawLine(lineDownStart, lineDownEnd, Color.red);
 
             if (downHit.collider != null)
             {
@@ -533,7 +552,7 @@ public class PlayerRb : MonoBehaviour
                     Vector3 offset = transform.forward * forwardOffset + transform.up * upOffset;
                     hangPos += offset;
                     transform.position = hangPos;
-                    transform.forward = -fwdHit.normal;
+                    transform.forward = new Vector3(-fwdHit.normal.x, 0f, -fwdHit.normal.z);
 
                     ledgeJumpTimer = ledgeJumpTime;
                 }
@@ -549,7 +568,7 @@ public class PlayerRb : MonoBehaviour
             hanging = false;
 
             rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-            rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
 
             StartCoroutine(EnableCanMove(.25f));
         }
