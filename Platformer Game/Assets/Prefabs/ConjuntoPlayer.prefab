@@ -3569,7 +3569,7 @@ MonoBehaviour:
   m_YAxis:
     Value: 0.5
     m_SpeedMode: 0
-    m_MaxSpeed: 1.25
+    m_MaxSpeed: 4
     m_AccelTime: 0.1
     m_DecelTime: 0.1
     m_InputAxisName: Mouse Y
@@ -3593,7 +3593,7 @@ MonoBehaviour:
   m_XAxis:
     Value: 0
     m_SpeedMode: 0
-    m_MaxSpeed: 225
+    m_MaxSpeed: 400
     m_AccelTime: 0.1
     m_DecelTime: 0.1
     m_InputAxisName: Mouse X
@@ -7337,7 +7337,7 @@ MonoBehaviour:
   wallrunSpeed: 15
   slideSpeed: 30
   climbSpeed: 3
-  boostFactor: 0
+  boostFactor: 1
   walkFactor: 1
   sprintStopFactor: 200
   dashSpeedChangeFactor: 50
@@ -7369,7 +7369,7 @@ MonoBehaviour:
     m_Bits: 193
   downRayLength: 1.5
   fwdRayLength: 0.7
-  forwardOffset: -0.3
+  forwardOffset: -0.1
   upOffset: -0.8
   ledgeJumpTime: 0.1
   orientation: {fileID: 6803265335426490554}
@@ -8305,7 +8305,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8159429597284382143}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.09906931, y: -0, z: -0, w: 0.99508053}
+  m_LocalRotation: {x: 0.09906931, y: 1e-45, z: -0, w: 0.99508053}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
