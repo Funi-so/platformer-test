@@ -11,11 +11,12 @@ public class SmoothSizeIncrease : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     private bool isHovering = false;
 
-    void Start()
+    void Awake()
     {
         visualRect = transform.GetComponent<RectTransform>();
         initialScale = visualRect.localScale;
     }
+
 
     void Update()
     {
@@ -36,6 +37,9 @@ public class SmoothSizeIncrease : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        isHovering = false;
+    }
+    void OnDisable(){
         isHovering = false;
     }
 }
