@@ -13,7 +13,7 @@ public class GenericButton : MonoBehaviour
     
     [Header("Fade In / Fade Out")]
     public GameObject rendsParent;
-    public Graphic[] rends;
+    private Graphic[] rends;
     public float waitTime = 0.5f;
     public float fadeTime = 0.5f;
     public float disableTime = 1.0f;
@@ -24,6 +24,9 @@ public class GenericButton : MonoBehaviour
 
     void Start(){
         rect = GetComponent<RectTransform>();
+        if(rendsParent != null){
+            rends = rendsParent.GetComponentsInChildren<Graphic>(true);
+        }
     }
     public void GoToScene(float delayTime)
     {

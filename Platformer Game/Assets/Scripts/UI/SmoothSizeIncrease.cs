@@ -9,12 +9,17 @@ public class SmoothSizeIncrease : MonoBehaviour, IPointerEnterHandler, IPointerE
     public float hoverScaleFactor = 1.7f;
     public float scaleSpeed = 10f;
 
+    public bool startScaled;
+
     private bool isHovering = false;
+    private bool looking = true;
 
     void Awake()
     {
         visualRect = transform.GetComponent<RectTransform>();
         initialScale = visualRect.localScale;
+
+        KeepBig(startScaled);
     }
 
 
@@ -32,14 +37,19 @@ public class SmoothSizeIncrease : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        isHovering = true;
+        if(looking) isHovering = true;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        isHovering = false;
+        if(looking) isHovering = false;
     }
     void OnDisable(){
         isHovering = false;
+    }
+
+    public void KeepBig(bool size){
+        looking = !size;
+        isHovering = size;
     }
 }
