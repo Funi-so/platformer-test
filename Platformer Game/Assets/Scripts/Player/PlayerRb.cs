@@ -117,6 +117,8 @@ public class PlayerRb : MonoBehaviour
         {
             jumpWindow = Time.time + coyoteTime;
             ResetAnimationTrigger(0.2f, "Landed");
+            animator.SetBool("Falling", false);
+            animator.SetBool("Jump", false);
         }
         if (state == MovementState.walking || state == MovementState.crouching || state == MovementState.sprinting)
         {
@@ -236,6 +238,10 @@ public class PlayerRb : MonoBehaviour
         else if (hanging)
         {
             state = MovementState.hanging;
+            animator.SetBool("Hanging", true);
+            animator.SetBool("Falling", false);
+            rb.velocity = new Vector3(rb.velocity.x , 0f, rb.velocity.z);
+
             ledgeJumpTimer -= Time.deltaTime;
         }
 
@@ -389,9 +395,12 @@ public class PlayerRb : MonoBehaviour
             {
                 rb.AddForce(moveDir.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
             }
-        } 
+        }
 
-        if (!wallrunning) { rb.useGravity = !OnSlope(); }
+        if (
+            //OnSlope()
+            !wallrunning
+            ) { rb.useGravity = !OnSlope(); }
     }
 
     private void SpeedControl()
@@ -587,6 +596,7 @@ public class PlayerRb : MonoBehaviour
         { 
             rb.useGravity = true;
             hanging = false;
+            animator.SetBool("Hanging", false);
 
             rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
@@ -599,8 +609,10 @@ public class PlayerRb : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         restricted = false;
     }
-    IEnumerator ResetAnimationTrigger(float waitTime, string trigger){
+    IEnumerator ResetAnimationTrigger(float waitTime, string trigger)
+    {
         yield return new WaitForSeconds(waitTime);
         animator.ResetTrigger(trigger);
+        
     }
 }
