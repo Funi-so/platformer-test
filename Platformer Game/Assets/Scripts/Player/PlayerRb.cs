@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
@@ -115,6 +116,7 @@ public class PlayerRb : MonoBehaviour
         if (isGrounded)
         {
             jumpWindow = Time.time + coyoteTime;
+            ResetAnimationTrigger(0.2f, "Landed");
         }
         if (state == MovementState.walking || state == MovementState.crouching || state == MovementState.sprinting)
         {
@@ -430,11 +432,13 @@ public class PlayerRb : MonoBehaviour
         {
             if(hanging) LedgeJump();
 
-            if (Time.time <= jumpWindow || jumpBuffer && isGrounded && Time.time <= jumpBufferTimer) 
+            else if (Time.time <= jumpWindow || jumpBuffer && isGrounded && Time.time <= jumpBufferTimer) 
             { 
                 exitingSlope = true;
                 isJumping = true;
                 jumpTime = jumpStartTime;
+                animator.SetBool("Jump", true);
+                animator.ResetTrigger("Landed");
 
                 //rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
                 jumpMovement = true;
@@ -487,12 +491,29 @@ public class PlayerRb : MonoBehaviour
         {
             isJumping = false;
         }
-           
+        
+        //Se tiver subindo
+        if(animator.GetBool("Jump") && rb.velocity.y < -0.2 && isGrounded){
+           animator.SetBool("Jump", false);
+            animator.SetTrigger("Landed");
+        }
+
+        if(rb.velocity.y > 0.2 && !OnSlope() && !hanging && !climbing){
+            animator.SetBool("Ascending", true);
+            animator.SetBool("Falling", false);
+        }
         //Se estiver caindo, a "gravidade" aumenta
-        if(rb.velocity.y < 0 && !OnSlope() && !hanging && !climbing) 
+        else if(rb.velocity.y < 0.2 && !OnSlope() && !hanging && !climbing && !isGrounded) 
             { 
                 rb.AddForce(Vector3.down * gravityMultiplier, ForceMode.Force);
+                animator.SetBool("Falling",true);
+                animator.SetBool("Ascending", false);
             }
+        else if (rb.velocity.y < -3 && isGrounded){
+            animator.SetTrigger("Landed");
+        }
+        Debug.Log(rb.velocity.y);
+        
     }
     private void JumpMovement(){
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
@@ -577,5 +598,9 @@ public class PlayerRb : MonoBehaviour
     {
         yield return new WaitForSeconds(waitTime);
         restricted = false;
+    }
+    IEnumerator ResetAnimationTrigger(float waitTime, string trigger){
+        yield return new WaitForSeconds(waitTime);
+        animator.ResetTrigger(trigger);
     }
 }
