@@ -101,7 +101,7 @@ public class Climbing : MonoBehaviour
 
     private void StartClimbing() 
     {
-        rb.velocity = new Vector3 (rb.velocity.x, 0f, rb.velocity.z);
+        rb.linearVelocity = new Vector3 (rb.linearVelocity.x, 0f, rb.linearVelocity.z);
         rb.useGravity = useGravity;
         pm.climbing = true;
         pm.restricted = true;
@@ -112,7 +112,7 @@ public class Climbing : MonoBehaviour
 
     private void ClimbingMovement()
     {
-        rb.velocity = new Vector3(rb.velocity.x, climbSpeed, rb.velocity.z);
+        rb.linearVelocity = new Vector3(rb.linearVelocity.x, climbSpeed, rb.linearVelocity.z);
     }
 
     private void StopClimbing()
@@ -132,7 +132,7 @@ public class Climbing : MonoBehaviour
         exitWallTimer = exitWallTime;
         Vector3 forceToApply = transform.up * climbJumpUpForce + frontWallHit.normal * climbJumpBackForce;
 
-        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
         rb.AddForce(forceToApply, ForceMode.Impulse);
 
         climbJumpsLeft--;

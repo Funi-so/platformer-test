@@ -9,7 +9,7 @@ public class FollowDamped : MonoBehaviour
     public float damping;
     private Vector3 velocity = new Vector3();
 
-    void Update()
+    void FixedUpdate()
     {
         velocity = target.position - transform.position;
         velocity = Vector3.ClampMagnitude(velocity, maxSpeed);

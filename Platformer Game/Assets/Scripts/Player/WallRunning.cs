@@ -144,7 +144,7 @@ public class WallRunning : MonoBehaviour
 
         wallRunTimer = maxWallRunTime;
 
-        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
 
         //Camera effects
         cam.DoFov(95f);
@@ -199,7 +199,7 @@ public class WallRunning : MonoBehaviour
         Vector3 wallNormal = wallRight ? rightWallHit.normal : leftWallHit.normal;
         Vector3 forceToApply = transform.up * wallJumpUpForce + wallNormal * wallJumpSideForce;
 
-        rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
         rb.AddForce(forceToApply, ForceMode.Impulse);
         //pm.velocity += forceToApply;
     }

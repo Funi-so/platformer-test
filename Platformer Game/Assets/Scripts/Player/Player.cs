@@ -40,7 +40,7 @@ public class Player : MonoBehaviour {
 
     void AnimationHandler()
     {
-        moveSpeed = rb.velocity.magnitude/10;
+        moveSpeed = rb.linearVelocity.magnitude/10;
         if (pm.isGrounded)
         {
             //if(lastMoveSpeed != moveSpeed)

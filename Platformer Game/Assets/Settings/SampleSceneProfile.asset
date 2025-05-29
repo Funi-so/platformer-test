@@ -75,6 +75,40 @@ MonoBehaviour:
   rounded:
     m_OverrideState: 0
     m_Value: 0
+--- !u!114 &-1952397274062903986
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3df4e1e32f0469e42859a646219b6408, type: 3}
+  m_Name: ScreenSpaceReflections
+  m_EditorClassIdentifier: 
+  active: 0
+  enabled:
+    m_OverrideState: 1
+    m_Value: 1
+  downsample:
+    m_OverrideState: 1
+    m_Value: 1
+  samples:
+    m_OverrideState: 1
+    m_Value: 8
+  steps:
+    m_OverrideState: 1
+    m_Value: 100
+  stepSize:
+    m_OverrideState: 1
+    m_Value: 0.1
+  thickness:
+    m_OverrideState: 1
+    m_Value: 0.1
+  minSmoothness:
+    m_OverrideState: 1
+    m_Value: 0.1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,6 +126,7 @@ MonoBehaviour:
   - {fileID: -7893295128165547882}
   - {fileID: -7011558710299706105}
   - {fileID: 5575578313417723461}
+  - {fileID: -1952397274062903986}
 --- !u!114 &849379129802519247
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -107,7 +142,7 @@ MonoBehaviour:
   active: 1
   mode:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 2
   neutralHDRRangeReductionMode:
     m_OverrideState: 0
     m_Value: 2

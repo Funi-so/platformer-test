@@ -72,6 +72,7 @@ public class PlayerRb : MonoBehaviour
     public float groundDistance = 0.1f;
     public LayerMask groundMask;
     public bool isGrounded;
+    private bool earlyGrounded;
 
     [Header("Slope Handling")]
     public float maxSlopeAngle;
@@ -93,6 +94,7 @@ public class PlayerRb : MonoBehaviour
     public Animator animator;
     public Camera cam;
     public Climbing climbingScript;
+    public ParticleSystem DustParticles;
 
     float horizontalInput;
     float verticalInput;
@@ -102,6 +104,7 @@ public class PlayerRb : MonoBehaviour
 
     void Start()
     {
+        
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
 
@@ -113,20 +116,24 @@ public class PlayerRb : MonoBehaviour
     {
         //ground check
         isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + groundDistance, groundMask);
+        //earlyGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight  * 0.5f + groundDistance + groundDistance, groundMask);
         if (isGrounded)
         {
             jumpWindow = Time.time + coyoteTime;
-            ResetAnimationTrigger(0.2f, "Landed");
+            jumpedButStillHasntReachedGround = false;
+            animator.ResetTrigger("Landed");
+            //ResetAnimationTrigger(0.2f, "Landed");
+            animator.SetBool("Ascending", false);
             animator.SetBool("Falling", false);
             animator.SetBool("Jump", false);
         }
         if (state == MovementState.walking || state == MovementState.crouching || state == MovementState.sprinting)
         {
-             rb.drag = groundDrag;
+             rb.linearDamping = groundDrag;
         }
         else
         {
-             rb.drag = 0;
+             rb.linearDamping = 0;
         }
 
         rb.rotation = orientation.rotation;
@@ -211,7 +218,7 @@ public class PlayerRb : MonoBehaviour
         if (freeze)
         {
             state = MovementState.freeze;
-            rb.velocity = Vector3.zero;
+            rb.linearVelocity = Vector3.zero;
         }
 
         else if (unlimited)
@@ -239,8 +246,9 @@ public class PlayerRb : MonoBehaviour
         {
             state = MovementState.hanging;
             animator.SetBool("Hanging", true);
+            animator.SetBool("Jump", false);
             animator.SetBool("Falling", false);
-            rb.velocity = new Vector3(rb.velocity.x , 0f, rb.velocity.z);
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x , 0f, rb.linearVelocity.z);
 
             ledgeJumpTimer -= Time.deltaTime;
         }
@@ -249,7 +257,7 @@ public class PlayerRb : MonoBehaviour
         {
             state = MovementState.sliding;
 
-            if(OnSlope() && rb.velocity.y < 0.1f)
+            if(OnSlope() && rb.linearVelocity.y < 0.1f)
             {
                 desiredMoveSpeed = slideSpeed;
                 boostFactor = startBoostFactor;
@@ -373,7 +381,7 @@ public class PlayerRb : MonoBehaviour
         {
             rb.AddForce(GetSlopeMoveDirection(moveDirection) * moveSpeed * 80f, ForceMode.Force); 
 
-            if(rb.velocity.y < 0 && (horizontalInput> 0 || verticalInput > 0))
+            if(rb.linearVelocity.y < 0 && (horizontalInput> 0 || verticalInput > 0))
             {
                 rb.AddForce(Vector3.down * 80f, ForceMode.Force);
             }
@@ -409,8 +417,8 @@ public class PlayerRb : MonoBehaviour
 
         if (OnSlope() && !exitingSlope)
         {
-            if (rb.velocity.magnitude > moveSpeed)
-                rb.velocity = rb.velocity.normalized * moveSpeed;
+            if (rb.linearVelocity.magnitude > moveSpeed)
+                rb.linearVelocity = rb.linearVelocity.normalized * moveSpeed;
         }
 
 
@@ -418,33 +426,45 @@ public class PlayerRb : MonoBehaviour
 
         else
         {
-            Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+            Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
             if (flatVel.magnitude > moveSpeed)
             {
                 Vector3 limitedVel = flatVel.normalized * moveSpeed;
-                rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
+                rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
             }
         }
 
         // Limita velocidade em Y
-        if (maxYSpeed != 0 && rb.velocity.y > maxYSpeed)
+        if (maxYSpeed != 0 && rb.linearVelocity.y > maxYSpeed)
         {
-            rb.velocity = new Vector3(rb.velocity.x, maxYSpeed, rb.velocity.z);
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x, maxYSpeed, rb.linearVelocity.z);
         }
     }
 
+    private bool landedBuffer;
+    private bool jumpedButStillHasntReachedGround;
     private void Jump()
     {
 
         //Pulo (Caso aperte o botao ou pelo Jump Buffer)
         if (Input.GetButtonDown("Jump"))
         {
-            if(hanging) LedgeJump();
+            if (hanging) LedgeJump();
 
-            else if (Time.time <= jumpWindow || jumpBuffer && isGrounded && Time.time <= jumpBufferTimer) 
-            { 
+            else if ((
+                //Se está no chão ou estava a pouco tempo
+                Time.time <= jumpWindow
+
+                //Ou apertou o botão de pulo pouco antes de cair no chão 
+                || jumpBuffer && isGrounded && Time.time <= jumpBufferTimer)
+
+                //E não tem muita velocidade em y (não acabou de pular)
+                && !(rb.linearVelocity.y > 5f)
+                )
+            {
                 exitingSlope = true;
                 isJumping = true;
+                jumpedButStillHasntReachedGround = true;
                 jumpTime = jumpStartTime;
                 animator.SetBool("Jump", true);
                 animator.ResetTrigger("Landed");
@@ -465,7 +485,8 @@ public class PlayerRb : MonoBehaviour
                 jumpBufferTimer = Time.time + jumpBufferTime;
             }
 
-            else {
+            else
+            {
                 jumpMovement = false;
             }
         }
@@ -488,7 +509,7 @@ public class PlayerRb : MonoBehaviour
             //rb.AddForce(Vector3.up * jumpHoldForce, ForceMode.Force);
             holdJump = true;
             jumpTime -= Time.deltaTime;
-            
+
         }
         else
         {
@@ -500,29 +521,39 @@ public class PlayerRb : MonoBehaviour
         {
             isJumping = false;
         }
-        
-        //Se tiver subindo
-        if(animator.GetBool("Jump") && rb.velocity.y < -0.2 && isGrounded){
-           animator.SetBool("Jump", false);
-            animator.SetTrigger("Landed");
-        }
 
-        if(rb.velocity.y > 0.2 && !OnSlope() && !hanging && !climbing){
+        //Se tiver subindo
+        /*if (animator.GetBool("Jump") && rb.linearVelocity.y < -0.2 && isGrounded)
+        {
+            animator.SetBool("Jump", false);
+            animator.SetTrigger("Landed");
+        }*/
+
+        if (rb.linearVelocity.y > 0.2 && !OnSlope() && !hanging && !climbing)
+        {
             animator.SetBool("Ascending", true);
             animator.SetBool("Falling", false);
         }
         //Se estiver caindo, a "gravidade" aumenta
-        else if(rb.velocity.y < 0.2 && !OnSlope() && !hanging && !climbing && !isGrounded) 
-            { 
-                rb.AddForce(Vector3.down * gravityMultiplier, ForceMode.Force);
-                animator.SetBool("Falling",true);
-                animator.SetBool("Ascending", false);
-            }
-        else if (rb.velocity.y < -3 && isGrounded){
-            animator.SetTrigger("Landed");
+        else if (rb.linearVelocity.y < 0.2 && !OnSlope() && !hanging && !climbing && !isGrounded)
+        {
+            rb.AddForce(Vector3.down * gravityMultiplier, ForceMode.Force);
+            landedBuffer = true;
+            animator.SetBool("Falling", true);
+            animator.SetBool("Ascending", false);
         }
-        Debug.Log(rb.velocity.y);
-        
+
+        if (landedBuffer && isGrounded)
+        {
+            landedBuffer = false;
+            animator.SetBool("Jump", false);
+            animator.SetTrigger("Landed");
+            if (!hanging)
+            {
+                DustParticles.Play();
+            }
+        }
+
     }
     private void JumpMovement(){
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
@@ -554,7 +585,10 @@ public class PlayerRb : MonoBehaviour
 
     void LedgeGrab()
     {
-        if (rb.velocity.y < 0 && !hanging)
+        if (rb.linearVelocity.y < 0 &&
+        landedBuffer &&
+        //jumpedButStillHasntReachedGround &&
+        !hanging)
         {
             RaycastHit downHit;
             Vector3 lineDownStart = transform.position + Vector3.up * downRayLength + transform.forward;
@@ -572,7 +606,7 @@ public class PlayerRb : MonoBehaviour
                 if (fwdHit.collider != null)
                 {
                     // Hanging on Ledge
-                    rb.velocity = Vector3.zero;
+                    rb.linearVelocity = Vector3.zero;
                     rb.useGravity = false;
 
                     hanging = true;
@@ -598,7 +632,7 @@ public class PlayerRb : MonoBehaviour
             hanging = false;
             animator.SetBool("Hanging", false);
 
-            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
 
             StartCoroutine(EnableCanMove(.25f));
