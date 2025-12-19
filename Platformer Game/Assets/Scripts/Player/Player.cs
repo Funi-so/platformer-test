@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -15,6 +16,7 @@ public class Player : MonoBehaviour {
     public PlayerRb pm;
     public Rigidbody rb;
     public Animator animator;
+    //public UIInventory uiInventory;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -27,16 +29,18 @@ public class Player : MonoBehaviour {
         AnimationHandler();
     }
 
-    /*
+    
     void OnTriggerEnter(Collider collider)
     {
+
         ItemWorld itemWorld = collider.GetComponent<ItemWorld>();
+            Debug.Log(GameManager.instance.inventory.GetItemList());
         if(itemWorld != null)
         {
             GameManager.instance.inventory.AddItem(itemWorld.GetItem());
             itemWorld.DestroySelf();
         }
-    }*/
+    }
 
     void AnimationHandler()
     {

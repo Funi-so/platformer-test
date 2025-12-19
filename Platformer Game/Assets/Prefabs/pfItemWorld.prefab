@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7045735118864834962}
   - component: {fileID: 4806798200166867217}
   - component: {fileID: 8919092132824340760}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: pfItemWorld
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -82,6 +82,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -146,3 +149,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b98e631b657e9954fbbc1b9bd9f6d102, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  item:
+    itemType: 0
+    amount: 0
