@@ -106,11 +106,10 @@ BlendTree:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Blend Tree
+  m_Name: Grounded
   m_Childs:
   - serializedVersion: 2
-    m_Motion: {fileID: -1418381163783116556, guid: 98d7d5037809f894eae53127d56848da,
-      type: 3}
+    m_Motion: {fileID: -1418381163783116556, guid: 98d7d5037809f894eae53127d56848da, type: 3}
     m_Threshold: 0
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -118,8 +117,7 @@ BlendTree:
     m_DirectBlendParameter: Speed
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 2667949614841947897, guid: 98d7d5037809f894eae53127d56848da,
-      type: 3}
+    m_Motion: {fileID: 2667949614841947897, guid: 98d7d5037809f894eae53127d56848da, type: 3}
     m_Threshold: 0.2
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -127,8 +125,7 @@ BlendTree:
     m_DirectBlendParameter: Speed
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 2667949614841947897, guid: 98d7d5037809f894eae53127d56848da,
-      type: 3}
+    m_Motion: {fileID: 2667949614841947897, guid: 98d7d5037809f894eae53127d56848da, type: 3}
     m_Threshold: 0.65
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1.4
@@ -136,8 +133,7 @@ BlendTree:
     m_DirectBlendParameter: Speed
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 5522812681064789136, guid: 98d7d5037809f894eae53127d56848da,
-      type: 3}
+    m_Motion: {fileID: 5522812681064789136, guid: 98d7d5037809f894eae53127d56848da, type: 3}
     m_Threshold: 0.8
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -233,7 +229,7 @@ AnimatorState:
   m_TimeParameter: 
 --- !u!1107 &-779792268835135188
 AnimatorStateMachine:
-  serializedVersion: 6
+  serializedVersion: 7
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -251,13 +247,13 @@ AnimatorStateMachine:
     m_Position: {x: 280, y: -280, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -1212241375996111934}
-    m_Position: {x: 590, y: -80, z: 0}
+    m_Position: {x: 590, y: -60, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 9190545868105469467}
     m_Position: {x: 590, y: -270, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7433097196629191180}
-    m_Position: {x: 20, y: -80, z: 0}
+    m_Position: {x: 30, y: -60, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: -454939213900968372}
@@ -351,7 +347,7 @@ AnimatorController:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: PlayerCharacterController
-  serializedVersion: 5
+  serializedVersion: 6
   m_AnimatorParameters:
   - m_Name: Speed
     m_Type: 1
@@ -408,6 +404,7 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
+  m_EvaluateTransitionsOnStart: 0
 --- !u!1101 &2612426632544456041
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -462,7 +459,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Blend Tree
+  m_Name: Grounded
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -552,8 +549,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 2483678692149750843, guid: 98d7d5037809f894eae53127d56848da,
-    type: 3}
+  m_Motion: {fileID: 2483678692149750843, guid: 98d7d5037809f894eae53127d56848da, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
