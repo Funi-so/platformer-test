@@ -24,7 +24,8 @@ public class InputHandler : ScriptableObject, InputActions.IInGameActions
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        //throw new System.NotImplementedException();
+        if(context.started)
+            Noor.GetInstance().SetJumpBuffer();
     }
 
     public void OnLookVector(InputAction.CallbackContext context)
@@ -34,15 +35,14 @@ public class InputHandler : ScriptableObject, InputActions.IInGameActions
 
     public void OnMoveVector(InputAction.CallbackContext context)
     {
-        Noor noorInstance = Noor.GetInstance();
         if (context.canceled)
         {
-            noorInstance.SetMoveInput(Vector2.zero);
+            Noor.GetInstance().SetMoveInput(Vector2.zero);
             Debug.Log("stopd");
             return;
         }
         Debug.Log("walkin");
-        noorInstance.SetMoveInput(context.ReadValue<Vector2>());
+        Noor.GetInstance().SetMoveInput(context.ReadValue<Vector2>());
     }
 
 }
