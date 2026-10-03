@@ -16,6 +16,7 @@ public class Noor : Singleton<Noor>
     [SerializeField] private float _groundBreaking;
     [SerializeField] private float _maxRunSpeed;
     [SerializeField] private float _jumpForce;
+    [SerializeField] private float _gravityForce;
     [SerializeField] private float _jumpLockTime;
     private float _jumpLockTimer;
     [SerializeField] private LayerMask _collisionLayers;
@@ -42,7 +43,7 @@ public class Noor : Singleton<Noor>
                 _velocity.y = 0;
                 _noorAnimator.SetBool("Grounded", true);
             }else{
-                _velocity.y -= 10* Time.fixedDeltaTime;
+                _velocity.y -= _gravityForce* Time.fixedDeltaTime;
                 _noorAnimator.SetBool("Grounded", false);
             }
         }
@@ -82,6 +83,8 @@ public class Noor : Singleton<Noor>
             // olha pra onde ta andando sua sonsa
             if(_velocity.sqrMagnitude > 0.01f)
                 _noorAnimator.transform.Rotate(Vector3.up, Vector3.SignedAngle(_noorAnimator.transform.forward, _velocity, Vector3.up));
+            _noorAnimator.SetFloat("Speed", new Vector2(_velocity.x, _velocity.z).magnitude);
+            _noorAnimator.SetFloat("SpeedY", _velocity.y);
 
             //pulin :>
             if(_jumpBuffer == true)
