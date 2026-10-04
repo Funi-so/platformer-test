@@ -109,7 +109,7 @@ BlendTree:
   m_Name: Grounded
   m_Childs:
   - serializedVersion: 2
-    m_Motion: {fileID: -8753484056179782609, guid: dd60cfea8b65f09469b8a65bf5f9eed4, type: 3}
+    m_Motion: {fileID: 7400000, guid: 9907df2a48cb64b4692bfc2dc460ff38, type: 2}
     m_Threshold: 0
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -117,24 +117,16 @@ BlendTree:
     m_DirectBlendParameter: Speed
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 8349542763059015795, guid: dd60cfea8b65f09469b8a65bf5f9eed4, type: 3}
-    m_Threshold: 0.2
+    m_Motion: {fileID: 7400000, guid: 322a012376e54fc4897afd12e4250b90, type: 2}
+    m_Threshold: 0.325
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: Speed
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: -7551964380084998518, guid: dd60cfea8b65f09469b8a65bf5f9eed4, type: 3}
+    m_Motion: {fileID: 7400000, guid: a25063559023dc6429c698c8a68bf9c4, type: 2}
     m_Threshold: 0.65
-    m_Position: {x: 0, y: 0}
-    m_TimeScale: 1
-    m_CycleOffset: 0
-    m_DirectBlendParameter: Speed
-    m_Mirror: 0
-  - serializedVersion: 2
-    m_Motion: {fileID: -7551964380084998518, guid: dd60cfea8b65f09469b8a65bf5f9eed4, type: 3}
-    m_Threshold: 0.8
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -143,8 +135,8 @@ BlendTree:
   m_BlendParameter: Speed
   m_BlendParameterY: Speed
   m_MinThreshold: 0
-  m_MaxThreshold: 0.8
-  m_UseAutomaticThresholds: 0
+  m_MaxThreshold: 0.65
+  m_UseAutomaticThresholds: 1
   m_NormalizedBlendValues: 0
   m_BlendType: 0
 --- !u!1102 &-2618783671019467760

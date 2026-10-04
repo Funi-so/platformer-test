@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using LifelikeMotion.IKFootPlacement;
 
 public class Noor : Singleton<Noor>
 {
@@ -8,6 +9,7 @@ public class Noor : Singleton<Noor>
     private bool _jumpBuffer;
     private Vector3 _velocity;
     [SerializeField] private Animator _noorAnimator;
+    [SerializeField] private IKFootPlacement iKFootPlacement;
     [SerializeField] private InputHandler IH;
     [Space(5)]
     [Header("Movement Knobs")]
@@ -42,9 +44,11 @@ public class Noor : Singleton<Noor>
             if(GroundCheck()){
                 _velocity.y = 0;
                 _noorAnimator.SetBool("Grounded", true);
+                iKFootPlacement.isGrounded = true;
             }else{
                 _velocity.y -= _gravityForce* Time.fixedDeltaTime;
                 _noorAnimator.SetBool("Grounded", false);
+                iKFootPlacement.isGrounded = false;
             }
         }
         #region Comportamento no chão
@@ -83,8 +87,8 @@ public class Noor : Singleton<Noor>
             // olha pra onde ta andando sua sonsa
             if(_velocity.sqrMagnitude > 0.01f)
                 _noorAnimator.transform.Rotate(Vector3.up, Vector3.SignedAngle(_noorAnimator.transform.forward, _velocity, Vector3.up));
-            _noorAnimator.SetFloat("Speed", new Vector2(_velocity.x, _velocity.z).magnitude);
-            _noorAnimator.SetFloat("SpeedY", _velocity.y);
+            _noorAnimator.SetFloat("Speed", new Vector2(_velocity.x, _velocity.z).magnitude/4);
+            //_noorAnimator.SetFloat("SpeedY", _velocity.y);
 
             //pulin :>
             if(_jumpBuffer == true)
@@ -93,9 +97,14 @@ public class Noor : Singleton<Noor>
                 _velocity += Vector3.up * _jumpForce;
                 _jumpLockTimer = _jumpLockTime;
                 _noorAnimator.SetTrigger("Jump");
+                iKFootPlacement.jumped=true;
             }
             #endregion
         }
+
+        // fala pro ik se está mechendo ou não (creio que independe do grounded)
+        if (_velocity.sqrMagnitude > 0.01f) iKFootPlacement.isMoving = true;
+                else iKFootPlacement.isMoving = false;
 
         // aplicacao de movimento
         //Debug.Log("translate (pfv)");
