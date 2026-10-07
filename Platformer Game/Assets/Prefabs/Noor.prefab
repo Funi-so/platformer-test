@@ -1679,6 +1679,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6435585396088947929, guid: dd60cfea8b65f09469b8a65bf5f9eed4, type: 3}
+      propertyPath: m_Name
+      value: LeftLegIKConstraint
+      objectReference: {fileID: 0}
+    - target: {fileID: 6435585396088947929, guid: dd60cfea8b65f09469b8a65bf5f9eed4, type: 3}
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
