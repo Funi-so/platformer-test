@@ -170,8 +170,9 @@ namespace LifelikeMotion.IKFootPlacement
         public bool isGrounded = true; // Important! This variable should be controlled by another script for character movement!
 
         // Component references
-        private Animator animator;
-        private RigBuilder rigBuilder;
+        
+        public Animator animator;
+        public RigBuilder rigBuilder;
 
         // IAnimationJob elements
         private PlayableGraph rigBuilderGraph;
@@ -183,8 +184,8 @@ namespace LifelikeMotion.IKFootPlacement
         private void OnEnable()
         {
             startup = true;
-            animator = GetComponent<Animator>();
-            rigBuilder = GetComponent<RigBuilder>();
+            //animator = GetComponent<Animator>();
+            //rigBuilder = GetComponent<RigBuilder>();
 
             if (animator == null)
             {
