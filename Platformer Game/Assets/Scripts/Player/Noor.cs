@@ -8,7 +8,7 @@ public class Noor : Singleton<Noor>
     private static readonly int GroundedHash = Animator.StringToHash("Grounded");
     private Vector2 _moveInput;
     private bool _jumpBuffer;
-    private Vector3 _velocity;
+    [HideInInspector] public Vector3 _velocity;
     private Vector3 _groundNormal;
     [SerializeField] private Animator _noorAnimator;
     [SerializeField] private IKFootPlacement iKFootPlacement;
@@ -83,7 +83,7 @@ public class Noor : Singleton<Noor>
         Debug.DrawLine(ray.origin, ray.origin + Vector3.down*0.85f);
         if(Physics.Raycast(ray, out hitInfo, 0.9f, _collisionLayers.value))
         {
-            Debug.Log("Yup, Ground");
+            //Debug.Log("Yup, Ground");
             if(hitInfo.point.y > transform.position.y)
                 transform.position = new Vector3(transform.position.x, hitInfo.point.y+0.05f, transform.position.z);
             _groundNormal = hitInfo.normal;
@@ -156,8 +156,6 @@ public class Noor : Singleton<Noor>
 
     private void WallCheck()
     {
-        RaycastHit hitInfo;
-
-        
+        //RaycastHit hitInfo;
     }
 }

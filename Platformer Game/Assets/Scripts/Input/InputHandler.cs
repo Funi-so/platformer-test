@@ -8,7 +8,7 @@ public class InputHandler : ScriptableObject, InputActions.IInGameActions
 
     void OnEnable()
     {
-        Debug.Log("InputEnable");
+        //Debug.Log("InputEnable");
         if(_inputActions == null)
             _inputActions = new InputActions();
         _inGameActions = _inputActions.InGame;
@@ -18,7 +18,7 @@ public class InputHandler : ScriptableObject, InputActions.IInGameActions
 
     void OnDisable()
     {
-        Debug.Log("InputDisable");
+        //Debug.Log("InputDisable");
         _inGameActions.Disable();
     }
 
@@ -38,10 +38,10 @@ public class InputHandler : ScriptableObject, InputActions.IInGameActions
         if (context.canceled)
         {
             Noor.GetInstance().SetMoveInput(Vector2.zero);
-            Debug.Log("stopd");
+            //Debug.Log("stopd");
             return;
         }
-        Debug.Log("walkin");
+        //Debug.Log("walkin");
         Noor.GetInstance().SetMoveInput(context.ReadValue<Vector2>());
     }
 
