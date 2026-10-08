@@ -10,6 +10,7 @@ public class TouchState: EnvironmentInteractionState
     }
     public override void EnterState()
     {
+        Debug.Log("Entrou no Estado Touch");
         _elapsedTime = 0f;
     }
     public override void ExitState(){}

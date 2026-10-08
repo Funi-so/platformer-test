@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 895203069503259933}
   - component: {fileID: 1481291081602875693}
-  m_Layer: 3
+  m_Layer: 9
   m_Name: ChestCol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,7 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeda7bfbf984f2a4da5ab4b8967b115d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Animation.Rigging::UnityEngine.Animations.Rigging.TwoBoneIKConstraint
-  m_Weight: 1
+  m_Weight: 0
   m_Data:
     m_Root: {fileID: 4146816935250351637}
     m_Mid: {fileID: 8002366770473964453}
@@ -158,7 +158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdb90b913935e644baaa86c076d788e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Animation.Rigging::UnityEngine.Animations.Rigging.MultiRotationConstraint
-  m_Weight: 1
+  m_Weight: 0
   m_Data:
     m_ConstrainedObject: {fileID: 7241310840063975092}
     m_SourceObjects:
@@ -352,7 +352,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6472470676750560733}
   - component: {fileID: 8756997877857745372}
-  m_Layer: 3
+  m_Layer: 9
   m_Name: AbdCol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -510,7 +510,7 @@ Transform:
   m_GameObject: {fileID: 4154305144132372815}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.3, y: 1.1, z: -0.6}
+  m_LocalPosition: {x: 0.2, y: 1.1, z: -0.6}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -527,6 +527,8 @@ GameObject:
   - component: {fileID: 5335086063494788209}
   - component: {fileID: 2582559233696256975}
   - component: {fileID: 1028292909710033027}
+  - component: {fileID: 5314757959903722310}
+  - component: {fileID: 6530224654309597824}
   m_Layer: 3
   m_Name: ArmEnvironmentReactions
   m_TagString: Untagged
@@ -543,7 +545,7 @@ Transform:
   m_GameObject: {fileID: 4239326052046573949}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -625,11 +627,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92368e30a10a3434887594faf32352e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnvironmentInteractionStateMachine
-  _noor: {fileID: 0}
-  _leftIkConstraint: {fileID: 0}
-  _rightIkConstraint: {fileID: 0}
-  _leftMultiRotationConstraint: {fileID: 0}
-  _rightMultiRotationConstraint: {fileID: 0}
+  wingspan: 1.8
+  _noor: {fileID: 1211257290083232380}
+  _leftIkConstraint: {fileID: 856761410981831163}
+  _rightIkConstraint: {fileID: 1978511275147076150}
+  _leftMultiRotationConstraint: {fileID: 8286034538486250003}
+  _rightMultiRotationConstraint: {fileID: 5868134754730533880}
+--- !u!54 &5314757959903722310
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4239326052046573949}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &6530224654309597824
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4239326052046573949}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2, y: 1, z: 1.2}
+  m_Center: {x: 0, y: 1.1545937, z: 0.83000004}
 --- !u!1 &5338861100817769711
 GameObject:
   m_ObjectHideFlags: 0
@@ -763,7 +814,7 @@ GameObject:
   - component: {fileID: 5400683747781868149}
   - component: {fileID: 1563745663552836650}
   - component: {fileID: 690347160490035328}
-  m_Layer: 3
+  m_Layer: 9
   m_Name: LeftUpLegCol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -804,7 +855,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.08
+  m_Radius: 0.1
   m_Height: 0.5
   m_Direction: 1
   m_Center: {x: 0.04, y: 0.24, z: 0.04}
@@ -874,7 +925,7 @@ GameObject:
   - component: {fileID: 1401569422167414964}
   - component: {fileID: 6641624173487087897}
   - component: {fileID: 3593033623408388284}
-  m_Layer: 3
+  m_Layer: 9
   m_Name: RightUpLegCol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -915,7 +966,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.08
+  m_Radius: 0.1
   m_Height: 0.5
   m_Direction: 1
   m_Center: {x: -0.04, y: 0.24, z: 0.04}
@@ -1045,7 +1096,8 @@ GameObject:
   - component: {fileID: 2784534072743891412}
   - component: {fileID: 1356198831209952378}
   - component: {fileID: 5224589681488200151}
-  m_Layer: 3
+  - component: {fileID: 62547223936282450}
+  m_Layer: 9
   m_Name: HipCol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1109,10 +1161,33 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.2
-  m_Height: 0.4
+  m_Radius: 0.20946713
+  m_Height: 0.4189342
   m_Direction: 0
-  m_Center: {x: 0, y: -0.18, z: 0.04}
+  m_Center: {x: -0.0000000020633293, y: -0.18946692, z: 0.04}
+--- !u!136 &62547223936282450
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7503729715321420693}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.18846186
+  m_Height: 0.45191836
+  m_Direction: 0
+  m_Center: {x: -0.0000000012866892, y: -0.1346121, z: -0.023849541}
 --- !u!1 &7787032561099475744
 GameObject:
   m_ObjectHideFlags: 0
@@ -1138,7 +1213,7 @@ Transform:
   m_GameObject: {fileID: 7787032561099475744}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.3, y: 1.1, z: -0.6}
+  m_LocalPosition: {x: -0.2, y: 1.1, z: -0.6}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1288,7 +1363,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeda7bfbf984f2a4da5ab4b8967b115d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Animation.Rigging::UnityEngine.Animations.Rigging.TwoBoneIKConstraint
-  m_Weight: 1
+  m_Weight: 0
   m_Data:
     m_Root: {fileID: 6827847494951581213}
     m_Mid: {fileID: 2974652743711952823}
@@ -1312,7 +1387,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdb90b913935e644baaa86c076d788e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Animation.Rigging::UnityEngine.Animations.Rigging.MultiRotationConstraint
-  m_Weight: 1
+  m_Weight: 0
   m_Data:
     m_ConstrainedObject: {fileID: 1198559309666756084}
     m_SourceObjects:
@@ -1392,13 +1467,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fbb62e2605bde343a5d7da24fdc8200, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Noor
+  _velocity: {x: 0, y: 0, z: 0}
   _noorAnimator: {fileID: 2970188894752969376}
   iKFootPlacement: {fileID: 1843319495897124286}
   IH: {fileID: 11400000, guid: f1a5a86d48c6d5f45b5a2f2415e8f0bd, type: 2}
   _groundAcceleration: 0.1
   _groundStopping: 0.08
   _groundBreaking: 0.2
-  _maxRunSpeed: 4
+  _maxRunSpeed: 2
   _jumpForce: 5
   _gravityForce: 9
   _jumpLockTime: 0.1
@@ -3619,7 +3695,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6149696152279030437, guid: dd60cfea8b65f09469b8a65bf5f9eed4, type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6149696152279030437, guid: dd60cfea8b65f09469b8a65bf5f9eed4, type: 3}
       propertyPath: m_IsActive
@@ -4111,7 +4187,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9076461110559242267, guid: dd60cfea8b65f09469b8a65bf5f9eed4, type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 9076461110559242267, guid: dd60cfea8b65f09469b8a65bf5f9eed4, type: 3}
       propertyPath: m_IsActive
@@ -4231,16 +4307,16 @@ Cloth:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 406660919465662250}
   m_Enabled: 1
-  m_StretchingStiffness: 1
-  m_BendingStiffness: 0
+  m_StretchingStiffness: 0.75
+  m_BendingStiffness: 0.25
   m_UseTethers: 1
   m_UseGravity: 1
-  m_Damping: 0.5
+  m_Damping: 0.25
   m_ExternalAcceleration: {x: 0, y: 0, z: 0}
   m_RandomAcceleration: {x: 0, y: 0, z: 0}
   m_WorldVelocityScale: 0.5
-  m_WorldAccelerationScale: 1
-  m_Friction: 0.5
+  m_WorldAccelerationScale: 0.5
+  m_Friction: 1
   m_CollisionMassScale: 0
   m_UseContinuousCollision: 1
   m_UseVirtualParticles: 1
@@ -4570,7 +4646,8 @@ Cloth:
   - {fileID: 8756997877857745372}
   - {fileID: 1356198831209952378}
   - {fileID: 5224589681488200151}
-  - {fileID: 5224589681488200151}
+  - {fileID: 62547223936282450}
+  - {fileID: 0}
   m_SphereColliders: []
   m_SelfCollisionDistance: 0
   m_SelfCollisionStiffness: 0.2
@@ -4953,15 +5030,15 @@ Cloth:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3245602919074149780}
   m_Enabled: 1
-  m_StretchingStiffness: 1
-  m_BendingStiffness: 0
+  m_StretchingStiffness: 0.75
+  m_BendingStiffness: 0.25
   m_UseTethers: 1
   m_UseGravity: 1
-  m_Damping: 0.2
+  m_Damping: 0.25
   m_ExternalAcceleration: {x: 0, y: 0, z: 0}
   m_RandomAcceleration: {x: 0, y: 0, z: 0}
   m_WorldVelocityScale: 0.5
-  m_WorldAccelerationScale: 1
+  m_WorldAccelerationScale: 0.5
   m_Friction: 0.5
   m_CollisionMassScale: 0
   m_UseContinuousCollision: 1
@@ -5546,7 +5623,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8400276980477596256}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b2d8418b0b9634b1892b0268dd9c2743, type: 3}
   m_Name: 

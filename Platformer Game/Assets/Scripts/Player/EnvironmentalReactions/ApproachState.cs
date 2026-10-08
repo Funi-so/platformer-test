@@ -3,9 +3,9 @@ using UnityEngine;
 public class ApproachState: EnvironmentInteractionState
 {
     float _elapsedTime = 5.0f;
-    float _lerpDuration = 0.5f;
-    float _approachDuration = 2.0f;
-    float _approachWeight = 0.5f;
+    float _lerpDuration = 2f;
+    float _approachDuration = 1.0f;
+    float _approachWeight = 0.25f;
     float _approachRotationWeight = 0.75f;
     float _rotationSpeed = 500f;
     float _riseDistanceThreshold = .5f;

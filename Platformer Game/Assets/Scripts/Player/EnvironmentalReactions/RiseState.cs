@@ -7,6 +7,7 @@ public class RiseState: EnvironmentInteractionState
     float _lerpDuration = 5.0f;
     float _riseWeight=1.0f;
     Quaternion _expectedHandRotation;
+    float _touchPositionYOffset= 0.3f;
     float _maxDistance = 0.5f;
     float _rotationSpeed = 1000f;
     float _touchDistanceThreshold = 0.5f;
@@ -25,7 +26,7 @@ public class RiseState: EnvironmentInteractionState
     {
         CalculateExpectedHandRotation();
         Context.InteractionPointYOffset = Mathf.Lerp(Context.InteractionPointYOffset,
-        Context.ClosestPointOnColliderFromShoulder.y, _elapsedTime/_lerpDuration);
+        Context.ClosestPointOnColliderFromShoulder.y-_touchPositionYOffset, _elapsedTime/_lerpDuration);
         Context.CurrentIKConstraint.weight = Mathf.Lerp(Context.CurrentIKConstraint.weight,_riseWeight,
          _elapsedTime/_lerpDuration);
         Context.CurrentMultiRotationConstraint.weight = Mathf.Lerp(Context.CurrentMultiRotationConstraint.weight,_riseWeight,
@@ -56,7 +57,9 @@ public class RiseState: EnvironmentInteractionState
             return EnvironmentInteractionStateMachine.EEnvironmentInteractionState.Reset;
         }
 
-        if(Vector3.Distance(Context.CurrentIKTargetTransform.position, Context.ClosestPointOnColliderFromShoulder) < _touchDistanceThreshold && _elapsedTime >= _touchTimeThreshold)
+        if(Vector3.Distance(Context.CurrentIKTargetTransform.position, new Vector3(Context.ClosestPointOnColliderFromShoulder.x, 
+        Context.ClosestPointOnColliderFromShoulder.y - _touchPositionYOffset, Context.ClosestPointOnColliderFromShoulder.z))
+        < _touchDistanceThreshold && _elapsedTime >= _touchTimeThreshold)
         {
             return EnvironmentInteractionStateMachine.EEnvironmentInteractionState.Touch;
         }
