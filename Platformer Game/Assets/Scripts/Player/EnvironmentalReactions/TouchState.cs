@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class TouchState: EnvironmentInteractionState
+public class TouchEnvState: EnvironmentInteractionState
 {
     public float _elapsedTime = 0f;
     public float _resetThreshold = 0.5f;
-    public TouchState(EnvironmentInteractionContext context, EnvironmentInteractionStateMachine.EEnvironmentInteractionState estate) : base(context, estate)
+    public TouchEnvState(EnvironmentInteractionContext context, EnvironmentInteractionStateMachine.EEnvironmentInteractionState estate) : base(context, estate)
     {
         EnvironmentInteractionContext Context = context;
     }

@@ -3777,13 +3777,17 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 1746569510}
-    - target: {fileID: 1211257290083232380, guid: 54ec47f1212f9324c8f54fff38258b5c, type: 3}
-      propertyPath: _maxRunSpeed
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 1978511275147076150, guid: 54ec47f1212f9324c8f54fff38258b5c, type: 3}
       propertyPath: m_Weight
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2273842109029039728, guid: 54ec47f1212f9324c8f54fff38258b5c, type: 3}
+      propertyPath: boneShape
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2273842109029039728, guid: 54ec47f1212f9324c8f54fff38258b5c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2582559233696256975, guid: 54ec47f1212f9324c8f54fff38258b5c, type: 3}
       propertyPath: m_Weight

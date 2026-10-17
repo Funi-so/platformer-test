@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class SearchState: EnvironmentInteractionState
+public class SearchEnvState: EnvironmentInteractionState
 {
     public float _approachDistanceThreshold = 2.0f;
-    public SearchState(EnvironmentInteractionContext context, EnvironmentInteractionStateMachine.EEnvironmentInteractionState estate) : base(context, estate)
+    public SearchEnvState(EnvironmentInteractionContext context, EnvironmentInteractionStateMachine.EEnvironmentInteractionState estate) : base(context, estate)
     {
         EnvironmentInteractionContext Context = context;
     }

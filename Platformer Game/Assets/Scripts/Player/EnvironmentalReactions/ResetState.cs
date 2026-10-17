@@ -1,12 +1,12 @@
 using UnityEngine;
 
-public class ResetState : EnvironmentInteractionState
+public class ResetEnvState : EnvironmentInteractionState
 {
     float _elapsedTime = 0.0f;
     float _resetDuration = 2.0f;
     float _lerpDuration = 10f;
     float _rotationSpeed = 500f;
-    public ResetState(EnvironmentInteractionContext context, EnvironmentInteractionStateMachine.EEnvironmentInteractionState estate) : base(context, estate)
+    public ResetEnvState(EnvironmentInteractionContext context, EnvironmentInteractionStateMachine.EEnvironmentInteractionState estate) : base(context, estate)
     {
         EnvironmentInteractionContext Context = context;
     }
@@ -35,7 +35,7 @@ public class ResetState : EnvironmentInteractionState
     
     public override EnvironmentInteractionStateMachine.EEnvironmentInteractionState GetNextState()
     {
-        bool isMoving = Context.noor._velocity != Vector3.zero;
+        bool isMoving = Context.noor.GetVelocity() != Vector3.zero;
         if (_elapsedTime >= _resetDuration && isMoving)
         {
             return EnvironmentInteractionStateMachine.EEnvironmentInteractionState.Search;

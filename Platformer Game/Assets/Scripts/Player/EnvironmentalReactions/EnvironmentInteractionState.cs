@@ -10,6 +10,9 @@ public abstract class EnvironmentInteractionState : BaseState<EnvironmentInterac
     {
         Context = context;
     }
+    public abstract void OnTriggerEnter(Collider other);
+    public abstract void OnTriggerStay(Collider other);
+    public abstract void OnTriggerExit(Collider other);
 
     protected bool CheckShouldReset()
     {
@@ -20,10 +23,10 @@ public abstract class EnvironmentInteractionState : BaseState<EnvironmentInterac
             return true;
         }
 
-        bool isPlayerStopped = Context.noor._velocity == Vector3.zero;
+        bool isPlayerStopped = Context.noor.GetVelocity() == Vector3.zero;
         bool isMovingAway = CheckIsMovingAway();
         bool isBadAngle = CheckIsBadAngle();
-        bool isPlayerJumping = Mathf.Round(Context.noor._velocity.y) >1;
+        bool isPlayerJumping = Mathf.Round(Context.noor.GetVelocity().y) >1;
 
         if (isPlayerStopped || isMovingAway || isBadAngle || isPlayerJumping)
         {

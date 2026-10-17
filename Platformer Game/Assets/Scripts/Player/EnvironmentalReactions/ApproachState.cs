@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ApproachState: EnvironmentInteractionState
+public class ApproachEnvState: EnvironmentInteractionState
 {
     float _elapsedTime = 5.0f;
     float _lerpDuration = 2f;
@@ -9,7 +9,7 @@ public class ApproachState: EnvironmentInteractionState
     float _approachRotationWeight = 0.75f;
     float _rotationSpeed = 500f;
     float _riseDistanceThreshold = .5f;
-    public ApproachState(EnvironmentInteractionContext context, EnvironmentInteractionStateMachine.EEnvironmentInteractionState estate) : base(context, estate)
+    public ApproachEnvState(EnvironmentInteractionContext context, EnvironmentInteractionStateMachine.EEnvironmentInteractionState estate) : base(context, estate)
     {
         EnvironmentInteractionContext Context = context;
     }

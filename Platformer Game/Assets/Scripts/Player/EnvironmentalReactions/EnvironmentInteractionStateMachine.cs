@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.Assertions;
 
-public class EnvironmentInteractionStateMachine : StateManager<EnvironmentInteractionStateMachine.EEnvironmentInteractionState>
+public class EnvironmentInteractionStateMachine : BaseStateMachine<EnvironmentInteractionStateMachine.EEnvironmentInteractionState>
 {
     public float wingspan = 1.8f;
     public enum EEnvironmentInteractionState
@@ -52,11 +52,11 @@ public class EnvironmentInteractionStateMachine : StateManager<EnvironmentIntera
 
     private void InitializeStates()
     {
-        States.Add(EEnvironmentInteractionState.Reset, new ResetState(_context, EEnvironmentInteractionState.Reset));
-        States.Add(EEnvironmentInteractionState.Search, new SearchState(_context, EEnvironmentInteractionState.Search));
-        States.Add(EEnvironmentInteractionState.Approach, new ApproachState(_context, EEnvironmentInteractionState.Approach));
-        States.Add(EEnvironmentInteractionState.Rise, new RiseState(_context, EEnvironmentInteractionState.Rise));
-        States.Add(EEnvironmentInteractionState.Touch, new TouchState(_context, EEnvironmentInteractionState.Touch));
+        States.Add(EEnvironmentInteractionState.Reset, new ResetEnvState(_context, EEnvironmentInteractionState.Reset));
+        States.Add(EEnvironmentInteractionState.Search, new SearchEnvState(_context, EEnvironmentInteractionState.Search));
+        States.Add(EEnvironmentInteractionState.Approach, new ApproachEnvState(_context, EEnvironmentInteractionState.Approach));
+        States.Add(EEnvironmentInteractionState.Rise, new RiseEnvState(_context, EEnvironmentInteractionState.Rise));
+        States.Add(EEnvironmentInteractionState.Touch, new TouchEnvState(_context, EEnvironmentInteractionState.Touch));
         CurrentState = States[EEnvironmentInteractionState.Reset];
     }
 
@@ -66,5 +66,21 @@ public class EnvironmentInteractionStateMachine : StateManager<EnvironmentIntera
         boxCollider.size = new Vector3(wingspan, wingspan, wingspan);
         boxCollider.center = new Vector3(_noor.transform.position.x, _noor.transform.position.y + (.9f+ .25f * wingspan), _noor.transform.position.y + (.5f * wingspan + .2f));
         boxCollider.isTrigger = true;
+    }
+    
+    void OnTriggerEnter(Collider other)
+    {
+        EnvironmentInteractionState State = CurrentState as EnvironmentInteractionState; 
+        State.OnTriggerEnter(other);
+    }
+    void OnTriggerStay(Collider other)
+    {
+        EnvironmentInteractionState State = CurrentState as EnvironmentInteractionState; 
+        State.OnTriggerStay(other);
+    }
+    void OnTriggerExit(Collider other)
+    {
+        EnvironmentInteractionState State = CurrentState as EnvironmentInteractionState; 
+        State.OnTriggerExit(other);
     }
 }

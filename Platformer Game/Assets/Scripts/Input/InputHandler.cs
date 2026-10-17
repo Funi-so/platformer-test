@@ -24,8 +24,7 @@ public class InputHandler : ScriptableObject, InputActions.IInGameActions
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if(context.started)
-            Noor.GetInstance().SetJumpBuffer();
+        
     }
 
     public void OnLookVector(InputAction.CallbackContext context)
@@ -35,14 +34,7 @@ public class InputHandler : ScriptableObject, InputActions.IInGameActions
 
     public void OnMoveVector(InputAction.CallbackContext context)
     {
-        if (context.canceled)
-        {
-            Noor.GetInstance().SetMoveInput(Vector2.zero);
-            //Debug.Log("stopd");
-            return;
-        }
-        //Debug.Log("walkin");
-        Noor.GetInstance().SetMoveInput(context.ReadValue<Vector2>());
+        MovementContext.inputVector = context.ReadValue<Vector2>();
     }
 
 }

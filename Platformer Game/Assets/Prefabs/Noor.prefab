@@ -1432,6 +1432,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6591182090036245198}
   - component: {fileID: 1211257290083232380}
+  - component: {fileID: 7104459544581865030}
   m_Layer: 3
   m_Name: Noor
   m_TagString: Untagged
@@ -1477,14 +1478,21 @@ MonoBehaviour:
   _maxRunSpeed: 2
   _jumpForce: 5
   _gravityForce: 9
-  _jumpLockTime: 0.1
   _collisionLayers:
     serializedVersion: 2
     m_Bits: 65
-  _innerColRadius: 0
-  _innerColHeight: 0
-  _outerColRadius: 0
-  _outerColHeight: 0
+--- !u!114 &7104459544581865030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8967594414949560316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6347f472da0d91b46b6f467f59eb4854, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MovementStateMachine
 --- !u!1001 &8670184345862876977
 PrefabInstance:
   m_ObjectHideFlags: 0

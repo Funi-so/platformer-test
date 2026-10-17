@@ -2,17 +2,17 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
-public abstract class StateManager<EState> : MonoBehaviour where EState: Enum
+public abstract class BaseStateMachine<StateEnum> : MonoBehaviour where StateEnum: Enum
 {
-    protected Dictionary<EState, BaseState<EState>> States = new Dictionary<EState, BaseState<EState>>();
+    protected Dictionary<StateEnum, BaseState<StateEnum>> States = new Dictionary<StateEnum, BaseState<StateEnum>>();
     protected bool IsTransitioningState = false;
-    public BaseState<EState> CurrentState{get;protected set;}
+    public BaseState<StateEnum> CurrentState{get;protected set;}
     void Start(){
         CurrentState.EnterState();
     }
     void Update()
     {
-        EState nextStateKey = CurrentState.GetNextState();
+        StateEnum nextStateKey = CurrentState.GetNextState();
         if (!IsTransitioningState && nextStateKey.Equals(CurrentState.StateKey))
         {
             CurrentState.UpdateState();
@@ -21,24 +21,13 @@ public abstract class StateManager<EState> : MonoBehaviour where EState: Enum
             TransitionToState(nextStateKey);
         }
     }
-    public void TransitionToState(EState stateKey)
+    public void TransitionToState(StateEnum stateKey)
     {
         IsTransitioningState=true;
         CurrentState.ExitState();
         CurrentState = States[stateKey];
         CurrentState.EnterState();
         IsTransitioningState=false;
-    }
-    void OnTriggerEnter(Collider other){
-        CurrentState.OnTriggerEnter(other);
-        }
-    void OnTriggerStay(Collider other)
-    {
-        CurrentState.OnTriggerStay(other);
-    }
-    void OnTriggerExit(Collider other)
-    {
-        CurrentState.OnTriggerExit(other);
     }
 }
 

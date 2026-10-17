@@ -1,7 +1,7 @@
 using Unity.Mathematics;
 using UnityEngine;
 
-public class RiseState: EnvironmentInteractionState
+public class RiseEnvState: EnvironmentInteractionState
 {
     float _elapsedTime = 0.0f;
     float _lerpDuration = 5.0f;
@@ -13,7 +13,7 @@ public class RiseState: EnvironmentInteractionState
     float _touchDistanceThreshold = 0.5f;
     float _touchTimeThreshold = 1f;
     protected LayerMask _interactableLayerMask = LayerMask.GetMask("Default");
-    public RiseState(EnvironmentInteractionContext context, EnvironmentInteractionStateMachine.EEnvironmentInteractionState estate) : base(context, estate)
+    public RiseEnvState(EnvironmentInteractionContext context, EnvironmentInteractionStateMachine.EEnvironmentInteractionState estate) : base(context, estate)
     {
         EnvironmentInteractionContext Context = context;
     }
