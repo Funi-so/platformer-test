@@ -527,8 +527,9 @@ GameObject:
   - component: {fileID: 5335086063494788209}
   - component: {fileID: 2582559233696256975}
   - component: {fileID: 1028292909710033027}
-  - component: {fileID: 5314757959903722310}
   - component: {fileID: 6530224654309597824}
+  - component: {fileID: 4466948006381825229}
+  - component: {fileID: 4433608090065218652}
   m_Layer: 3
   m_Name: ArmEnvironmentReactions
   m_TagString: Untagged
@@ -633,7 +634,28 @@ MonoBehaviour:
   _rightIkConstraint: {fileID: 1978511275147076150}
   _leftMultiRotationConstraint: {fileID: 8286034538486250003}
   _rightMultiRotationConstraint: {fileID: 5868134754730533880}
---- !u!54 &5314757959903722310
+--- !u!65 &6530224654309597824
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4239326052046573949}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2, y: 1, z: 1.2}
+  m_Center: {x: 0, y: 1.1545937, z: 0.83000004}
+--- !u!54 &4466948006381825229
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -660,7 +682,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &6530224654309597824
+--- !u!65 &4433608090065218652
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -679,7 +701,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2, y: 1, z: 1.2}
+  m_Size: {x: 2, y: 1.2811483, z: 1.2}
   m_Center: {x: 0, y: 1.1545937, z: 0.83000004}
 --- !u!1 &5338861100817769711
 GameObject:
@@ -1468,16 +1490,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fbb62e2605bde343a5d7da24fdc8200, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Noor
-  _velocity: {x: 0, y: 0, z: 0}
   _noorAnimator: {fileID: 2970188894752969376}
   iKFootPlacement: {fileID: 1843319495897124286}
   IH: {fileID: 11400000, guid: f1a5a86d48c6d5f45b5a2f2415e8f0bd, type: 2}
-  _groundAcceleration: 0.1
-  _groundStopping: 0.08
-  _groundBreaking: 0.2
-  _maxRunSpeed: 2
-  _jumpForce: 5
-  _gravityForce: 9
+  <GroundAcceleration>k__BackingField: 4
+  <GroundStopping>k__BackingField: 5
+  <GroundBreaking>k__BackingField: 5
+  <MaxWalkSpeed>k__BackingField: 5
+  <MaxRunSpeed>k__BackingField: 6
+  <RotationSpeed>k__BackingField: 270
+  <JumpForce>k__BackingField: 10
+  <GravityForce>k__BackingField: 9.81
   _collisionLayers:
     serializedVersion: 2
     m_Bits: 65
@@ -5631,12 +5654,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8400276980477596256}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b2d8418b0b9634b1892b0268dd9c2743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Animation.Rigging::UnityEngine.Animations.Rigging.BoneRenderer
-  boneShape: 1
+  boneShape: 0
   drawBones: 1
   drawTripods: 0
   boneSize: 1.57

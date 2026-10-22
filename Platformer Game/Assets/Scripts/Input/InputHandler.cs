@@ -35,6 +35,10 @@ public class InputHandler : ScriptableObject, InputActions.IInGameActions
     public void OnMoveVector(InputAction.CallbackContext context)
     {
         MovementContext.inputVector = context.ReadValue<Vector2>();
+        if(MovementContext.inputVector.sqrMagnitude > 1)
+        {
+            MovementContext.inputVector = MovementContext.inputVector.normalized;
+        }
     }
 
 }
