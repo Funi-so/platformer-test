@@ -22,6 +22,12 @@ public class AirborneMovState : MovementState
         
         // mid down raycast
         Ray ray = new Ray(MovementContext.noor.transform.position + Vector3.up,Vector3.down);
+
+        if(MovementContext.noor.GetVelocity().y > 2)
+        {
+            return StateKey;
+        }
+
         if(Physics.Raycast(ray, out hit, 1.2f, MovementContext.noor.GetCollisionLayers()))
         {
             // ground
@@ -37,6 +43,6 @@ public class AirborneMovState : MovementState
                 MovementContext.noor.GetVelocity() + Vector3.down * MovementContext.noor.GravityForce * Time.deltaTime
         );
 
-        MovementContext.noor.transform.Translate(MovementContext.noor.GetVelocity() * Time.deltaTime);
+        MovementContext.noor.transform.Translate(MovementContext.noor.GetVelocity() * Time.deltaTime, Space.World);
     }
 }

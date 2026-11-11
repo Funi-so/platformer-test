@@ -39,4 +39,9 @@ public class Noor : Singleton<Noor>
     {
         Debug.Log(gameObject + " | " + GetInstance().gameObject);
     }
+
+    void Update()
+    {
+        Debug.Log(_velocity);
+    }
 }

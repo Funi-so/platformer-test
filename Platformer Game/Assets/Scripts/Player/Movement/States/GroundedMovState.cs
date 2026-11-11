@@ -42,6 +42,12 @@ public class GroundedMovState : MovementState
         {
             return MovementStateMachine.MovementStates.Running;
         }
+
+        if (MovementContext.jumpBuffer)
+        {
+            MovementContext.jumpBuffer = false;
+            return MovementStateMachine.MovementStates.Jumping;
+        }
         
         // mid down raycast
         Ray ray = new Ray(MovementContext.noor.transform.position + Vector3.up,Vector3.down);
@@ -66,6 +72,7 @@ public class GroundedMovState : MovementState
 
     public override void UpdateState()
     {
+        // stopping/drag
         if(MovementContext.inputVector.sqrMagnitude <= 0.001)
         {
             MovementContext.noor.SetVelocity(

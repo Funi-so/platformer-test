@@ -24,7 +24,8 @@ public class InputHandler : ScriptableObject, InputActions.IInGameActions
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        
+        if(context.started)
+            MovementContext.jumpBuffer = true;
     }
 
     public void OnLookVector(InputAction.CallbackContext context)
