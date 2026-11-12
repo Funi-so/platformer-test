@@ -14,11 +14,11 @@ public class JumpingMovState : MovementState
         timer = jumpsquat;
         MovementContext.animator.SetBool("Grounded", false);
         MovementContext.animator.SetTrigger("Jump");
+        MovementContext.animator.SetFloat("Y Speed", 1);
     }
 
     public override void ExitState()
     {
-        MovementContext.animator.SetFloat("Y Speed", 1);
     }
 
     public override MovementStateMachine.MovementStates GetNextState()
