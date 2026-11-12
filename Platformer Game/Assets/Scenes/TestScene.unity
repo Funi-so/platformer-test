@@ -1446,6 +1446,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 507382573}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &593556523 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4739537700888212354, guid: 54ec47f1212f9324c8f54fff38258b5c, type: 3}
+  m_PrefabInstance: {fileID: 5833398381517397950}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70b342d8ce5c2fd48b8fa3147d48d1d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Animation.Rigging::UnityEngine.Animations.Rigging.Rig
 --- !u!1 &645910980
 GameObject:
   m_ObjectHideFlags: 0
@@ -2639,6 +2650,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1505373590}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1568927616 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2582559233696256975, guid: 54ec47f1212f9324c8f54fff38258b5c, type: 3}
+  m_PrefabInstance: {fileID: 5833398381517397950}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70b342d8ce5c2fd48b8fa3147d48d1d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Animation.Rigging::UnityEngine.Animations.Rigging.Rig
 --- !u!1 &1591635898
 GameObject:
   m_ObjectHideFlags: 0
@@ -3504,6 +3526,51 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1752226752}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1814714887 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8967594414949560316, guid: 54ec47f1212f9324c8f54fff38258b5c, type: 3}
+  m_PrefabInstance: {fileID: 5833398381517397950}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1814714891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1814714887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fff0960ef4ea6e04eac66b4a7fd2189d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Animation.Rigging::UnityEngine.Animations.Rigging.RigBuilder
+  m_RigLayers:
+  - m_Rig: {fileID: 593556523}
+    m_Active: 1
+  - m_Rig: {fileID: 1568927616}
+    m_Active: 1
+  m_Effectors: []
+--- !u!95 &1814714892
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1814714887}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: dd60cfea8b65f09469b8a65bf5f9eed4, type: 3}
+  m_Controller: {fileID: 9100000, guid: 9bbc9160124a9914786129e184d5ca8b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1968010068
 GameObject:
   m_ObjectHideFlags: 0
@@ -3624,6 +3691,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1211257290083232380, guid: 54ec47f1212f9324c8f54fff38258b5c, type: 3}
+      propertyPath: _noorAnimator
+      value: 
+      objectReference: {fileID: 1814714892}
+    - target: {fileID: 1843319495897124286, guid: 54ec47f1212f9324c8f54fff38258b5c, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1843319495897124286, guid: 54ec47f1212f9324c8f54fff38258b5c, type: 3}
+      propertyPath: rigBuilder
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6591182090036245198, guid: 54ec47f1212f9324c8f54fff38258b5c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3668,10 +3747,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: Noor
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2273842109029039728, guid: 54ec47f1212f9324c8f54fff38258b5c, type: 3}
+    - {fileID: 5905404611409801870, guid: 54ec47f1212f9324c8f54fff38258b5c, type: 3}
+    - {fileID: 2970188894752969376, guid: 54ec47f1212f9324c8f54fff38258b5c, type: 3}
+    - {fileID: 4433608090065218652, guid: 54ec47f1212f9324c8f54fff38258b5c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8967594414949560316, guid: 54ec47f1212f9324c8f54fff38258b5c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1814714892}
+    - targetCorrespondingSourceObject: {fileID: 8967594414949560316, guid: 54ec47f1212f9324c8f54fff38258b5c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1814714891}
   m_SourcePrefab: {fileID: 100100000, guid: 54ec47f1212f9324c8f54fff38258b5c, type: 3}
 --- !u!1001 &8823647828909621385
 PrefabInstance:
@@ -3726,16 +3815,32 @@ PrefabInstance:
       value: 60.000004
       objectReference: {fileID: 0}
     - target: {fileID: 2588456859094340527, guid: e8cf8315bb3eaa347b55ae1df1625347, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.007775813
+      objectReference: {fileID: 0}
+    - target: {fileID: 2588456859094340527, guid: e8cf8315bb3eaa347b55ae1df1625347, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.3243966
+      value: 3.1935487
+      objectReference: {fileID: 0}
+    - target: {fileID: 2588456859094340527, guid: e8cf8315bb3eaa347b55ae1df1625347, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -4.0312147
       objectReference: {fileID: 0}
     - target: {fileID: 5333309919769598554, guid: e8cf8315bb3eaa347b55ae1df1625347, type: 3}
       propertyPath: m_Name
       value: Camera
       objectReference: {fileID: 0}
     - target: {fileID: 7380717010703026696, guid: e8cf8315bb3eaa347b55ae1df1625347, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.007775813
+      objectReference: {fileID: 0}
+    - target: {fileID: 7380717010703026696, guid: e8cf8315bb3eaa347b55ae1df1625347, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.3243966
+      value: 3.1935487
+      objectReference: {fileID: 0}
+    - target: {fileID: 7380717010703026696, guid: e8cf8315bb3eaa347b55ae1df1625347, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -4.0312147
       objectReference: {fileID: 0}
     - target: {fileID: 8258081222531154480, guid: e8cf8315bb3eaa347b55ae1df1625347, type: 3}
       propertyPath: Target.TrackingTarget

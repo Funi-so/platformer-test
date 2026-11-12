@@ -99,6 +99,8 @@ public class RunningMovState : MovementState
         }
 
         Debug.Log("vel input dot " + Vector3.Dot(MovementContext.noor.GetVelocity(), worldInput));
+
+        MovementContext.animator.SetBool("Grounded", true);
         // velocity change
         currVel += MovementContext.noor.GroundAcceleration*0.5f * Vector3.Dot(MovementContext.noor.GetVelocity(), worldInput) * Time.deltaTime;
 
@@ -106,7 +108,7 @@ public class RunningMovState : MovementState
         MovementContext.noor.SetVelocity(
                 MovementContext.noor.transform.forward * (currVel)
         );
-
+        
         if(currVel >= MovementContext.noor.MaxRunSpeed)
         {
             MovementContext.noor.SetVelocity(MovementContext.noor.transform.forward * MovementContext.noor.MaxRunSpeed);

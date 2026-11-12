@@ -6,5 +6,6 @@ public static class MovementContext
     public static Vector2 inputVector;
     public static bool jumpBuffer;
     public static Vector3 groundNormal;
+    public static Animator animator;
     public static Camera camera;
 }

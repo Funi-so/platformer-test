@@ -11,6 +11,8 @@ public class GroundedMovState : MovementState
     public override void EnterState()
     {
         //Debug.Log("enter grounded");
+        MovementContext.animator.SetFloat("Y Speed", 0);
+
         RaycastHit hit;
 
         // mid down raycast
@@ -98,6 +100,8 @@ public class GroundedMovState : MovementState
                 currVel + (worldInput * MovementContext.noor.GroundAcceleration * Time.deltaTime)
         );
 
+        MovementContext.animator.SetBool("Grounded", true);
+        MovementContext.animator.SetFloat("Speed", Mathf.Clamp(MovementContext.noor.GetVelocity().magnitude /5,-1,1));
         //Debug.Log("worldinput " + worldInput);
         //Debug.Log("velocity " + MovementContext.noor.GetVelocity());
         //Debug.Log("delta " + Time.deltaTime);

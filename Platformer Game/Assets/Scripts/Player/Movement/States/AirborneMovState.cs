@@ -13,6 +13,7 @@ public class AirborneMovState : MovementState
 
     public override void ExitState()
     {
+        MovementContext.animator.SetBool("Grounded", true);
         //Debug.Log("exit grounded");
     }
 
@@ -44,5 +45,6 @@ public class AirborneMovState : MovementState
         );
 
         MovementContext.noor.transform.Translate(MovementContext.noor.GetVelocity() * Time.deltaTime, Space.World);
+        MovementContext.animator.SetFloat("Y Speed", Mathf.Clamp(MovementContext.noor.GetVelocity().y/5,-1,1));
     }
 }

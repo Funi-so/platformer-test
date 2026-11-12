@@ -9,7 +9,7 @@ public class Noor : Singleton<Noor>
     private Vector3 _velocity;
     public Vector3 GetVelocity(){return _velocity;}
     public void SetVelocity(Vector3 value){_velocity = value;}
-    [SerializeField] private Animator _noorAnimator;
+    [SerializeField] public Animator _noorAnimator;
     [SerializeField] private IKFootPlacement iKFootPlacement;
     [SerializeField] private InputHandler IH;
     [Header("Movement Knobs")]

@@ -19,6 +19,7 @@ public class MovementStateMachine : BaseStateMachine<MovementStateMachine.Moveme
         MovementContext.jumpBuffer = false;
         MovementContext.inputVector = Vector2.zero;
         MovementContext.groundNormal = Vector3.zero;
+        MovementContext.animator = MovementContext.noor._noorAnimator;
         MovementContext.camera = Camera.main;
 
         CurrentState = States[MovementStates.Grounded];

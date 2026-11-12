@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class JumpingMovState : MovementState
 {
-    const float jumpsquat = 0.2f;
+    const float jumpsquat = 0.4f;
     float timer = 0;
     public JumpingMovState(MovementStateMachine.MovementStates stateKey) : base(stateKey)
     {
@@ -12,11 +12,13 @@ public class JumpingMovState : MovementState
     {
         MovementContext.jumpBuffer = false;
         timer = jumpsquat;
+        MovementContext.animator.SetBool("Grounded", false);
+        MovementContext.animator.SetTrigger("Jump");
     }
 
     public override void ExitState()
     {
-        
+        MovementContext.animator.SetFloat("Y Speed", 1);
     }
 
     public override MovementStateMachine.MovementStates GetNextState()
