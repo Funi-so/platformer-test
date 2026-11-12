@@ -10,6 +10,7 @@ public class JumpingMovState : MovementState
     }
     public override void EnterState()
     {
+        MovementContext.jumpBuffer = false;
         timer = jumpsquat;
     }
 
@@ -27,8 +28,15 @@ public class JumpingMovState : MovementState
         else
         {
             timer = 0;
-            MovementContext.noor.SetVelocity(MovementContext.noor.GetVelocity() + Vector3.up*5);
-            
+            if(MovementContext.noor.GetVelocity().magnitude < MovementContext.noor.MaxWalkSpeed){
+                MovementContext.noor.SetVelocity(MovementContext.noor.GetVelocity().normalized * MovementContext.noor.MaxWalkSpeed*0.5f
+                        + Vector3.up*6);
+            }
+            else
+            {
+                MovementContext.noor.SetVelocity(MovementContext.noor.GetVelocity().normalized * MovementContext.noor.MaxRunSpeed * 1.5f
+                        + Vector3.up*4);
+            }
             return MovementStateMachine.MovementStates.Airborne;
         }
 
@@ -37,12 +45,12 @@ public class JumpingMovState : MovementState
     public override void UpdateState()
     {
         // drag
-        MovementContext.noor.SetVelocity(
+        /*MovementContext.noor.SetVelocity(
                     MovementContext.noor.GetVelocity().normalized 
                     * Mathf.Max(0, MovementContext.noor.GetVelocity().magnitude 
                     - MovementContext.noor.GroundStopping * Time.deltaTime)
             );
-        
+        */
         MovementContext.noor.transform.Translate(MovementContext.noor.GetVelocity() * Time.deltaTime, Space.World);
         timer -= Time.deltaTime;
     }

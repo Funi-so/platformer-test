@@ -38,7 +38,8 @@ public class RunningMovState : MovementState
     public override MovementStateMachine.MovementStates GetNextState()
     {
         RaycastHit hit;
-        
+        if(MovementContext.jumpBuffer)
+            return MovementStateMachine.MovementStates.Jumping;
         // mid down raycast
         Ray ray = new Ray(MovementContext.noor.transform.position + Vector3.up,Vector3.down);
         if(Physics.Raycast(ray, out hit, 1.2f, MovementContext.noor.GetCollisionLayers()))
@@ -68,8 +69,6 @@ public class RunningMovState : MovementState
 
     public override void UpdateState()
     {
-        Debug.Log("running update " + MovementContext.noor.GetVelocity());
-
         if(MovementContext.inputVector.sqrMagnitude <= 0.001f)
         {
               MovementContext.noor.SetVelocity(

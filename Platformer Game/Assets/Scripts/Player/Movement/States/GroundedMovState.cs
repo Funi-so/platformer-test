@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GroundedMovState : MovementState
@@ -45,7 +46,6 @@ public class GroundedMovState : MovementState
 
         if (MovementContext.jumpBuffer)
         {
-            MovementContext.jumpBuffer = false;
             return MovementStateMachine.MovementStates.Jumping;
         }
         
@@ -57,7 +57,7 @@ public class GroundedMovState : MovementState
             MovementContext.groundNormal = hit.normal;
             // ground is sticky
             MovementContext.noor.transform.position = new Vector3(MovementContext.noor.transform.position.x,
-                    Mathf.Max(hit.point.y,MovementContext.noor.transform.position.y),
+                    Mathf.Min(hit.point.y,MovementContext.noor.transform.position.y),
                     MovementContext.noor.transform.position.z);
             
             // TODO "slide off" logic
@@ -69,6 +69,7 @@ public class GroundedMovState : MovementState
         }
         return StateKey;
     }
+
 
     public override void UpdateState()
     {
@@ -100,6 +101,29 @@ public class GroundedMovState : MovementState
         //Debug.Log("worldinput " + worldInput);
         //Debug.Log("velocity " + MovementContext.noor.GetVelocity());
         //Debug.Log("delta " + Time.deltaTime);
+
+        // wall reaction
+        Vector3 midNoor = MovementContext.noor.transform.position + Vector3.up * 0.9f;
+        Collider[] walls = Physics.OverlapSphere(midNoor,0.6f, MovementContext.noor.GetCollisionLayers());
+
+        if(walls.Length > 0)
+        {
+            // get closest wall
+            Vector3 closestPoint = Vector3.positiveInfinity;
+            foreach(Collider wall in walls)
+            {
+                Vector3 point = Physics.ClosestPoint(midNoor, wall, wall.transform.position, wall.transform.rotation);
+                if((point - midNoor).sqrMagnitude < (closestPoint - midNoor).sqrMagnitude)
+                {
+                    closestPoint = point;
+                }
+            }
+            Vector3 normal = midNoor - closestPoint;
+            Debug.DrawRay(closestPoint, normal, Color.darkOrange);
+            
+            MovementContext.noor.SetVelocity(MovementContext.noor.GetVelocity() + normal);
+        }
+
 
         if(MovementContext.noor.GetVelocity().magnitude <= 0.001) return;
 
